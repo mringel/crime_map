@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
+   <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title></title>
   <link rel="stylesheet" type="text/css" href="styles/main.css">
 </head>
-<body>
+<body data-ng-app="CrimeMapApp">
 <div id="layout">
     <!-- Menu toggle -->
     <a href="#menu" id="menuLink" class="menu-link">
@@ -25,14 +26,16 @@
             </ul>
         </div>
     </div>
-
+    <main data-ng-controller="SimpleMapController">
     <div id="main">
         <div class="header">
-            <h1>Page Title</h1>
-            <h2>A subtitle for your page goes here</h2>
+            <h1>Seattle Police Report Map</h1>
+            <h2>Neighborhood Watch</h2>
         </div>
 
         <div class="content">
+            <leaflet height="480px" width="100%"></leaflet>
+
             <h2 class="content-subhead">How to use this layout</h2>
             <p>
                 To use this layout, you can just copy paste the HTML, along with the CSS in <a href="/css/layouts/side-menu.css" alt="Side Menu CSS">side-menu.css</a>, and the JavaScript in <a href="/js/ui.js">ui.js</a>. The JS file uses vanilla JavaScript to simply toggle an <code>active</code> class that makes the menu responsive.
@@ -64,11 +67,12 @@
             </p>
         </div>
     </div>
+  </main>
 </div>
 
+<script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
 <script src = 'scripts/pure-ui.js'></script>
+<script src = 'bundle.js'></script>
+
 </body>
 </html>
-
-
-
