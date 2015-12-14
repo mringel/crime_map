@@ -1,11 +1,10 @@
 var mongoose = require('mongoose');
+var uniqueValidator = require('mongoose-unique-validator');
+
 
 var crimeSchema = new mongoose.Schema({
   type: String,
-  geometry: {
-    type: String,
-    coordinates: Array
-  },
+  geometry: Object,
   properties: {
     location_state:String,
     hundred_block_location: String,
@@ -21,7 +20,7 @@ var crimeSchema = new mongoose.Schema({
     location_city: String,
     year: Number,
     longitude: Number,
-    rms_cdw_id: Number,
+    rms_cdw_id: { type : Number , unique : true, required : true, dropDups: true },
     summary_offense_code: String,
     general_offense_number: Number,
     offense_code_extension: Number,
@@ -31,5 +30,5 @@ var crimeSchema = new mongoose.Schema({
     month: Number
   }
 });
-
+crimeSchema.plugin(uniqueValidator);
 module.exports = mongoose.model('Crime', crimeSchema);

@@ -3,7 +3,7 @@ var mongoose = require('mongoose');
 var app = express();
 var crimeRouter = require(__dirname + '/routes/crime_routes.js');
 
-mongoose.connect(process.env.MONGOLAB_URI ||'mongodb://localhost/reader_db');
+mongoose.connect(process.env.MONGOLAB_URI ||'mongodb://localhost/crime_db');
 
 app.use(express.static(__dirname + '/build'));
 
