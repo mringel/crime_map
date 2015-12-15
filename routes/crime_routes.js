@@ -44,7 +44,6 @@ function callSPD (search, cb){
 var params = {screen_name: 'nodejs'};
 
 function callTwitter (){
-  console.log(client.consumer_key);
   client.get('statuses/user_timeline', params, function(error, tweets, response){
     if(error){
       console.log(error);
