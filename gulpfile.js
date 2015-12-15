@@ -44,6 +44,16 @@ gulp.task('scripts:dev', function() {
   .pipe(gulp.dest('build/scripts/'));
 });
 
+gulp.task('webpack:dev', function() {
+  gulp.src('app/scripts/entry.js')
+  .pipe(webpack({
+    output: {
+      filename: 'bundle.js'
+    }
+  }))
+  .pipe(gulp.dest('build/'));
+});
+
 gulp.task('webpack:test', function() {
   return gulp.src('test/client/test_entry.js')
   .pipe(webpack ({
