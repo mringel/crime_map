@@ -59,5 +59,5 @@ gulp.task('webpack:test', function() {
   .pipe(gulp.dest('test/client/'));
 });
 
-gulp.task('build:dev', ['webpack:dev', 'static:dev', 'styles:dev', 'photos:dev', 'scripts:dev']);
+gulp.task('build:dev', ['webpack:dev', 'static:dev', 'styles:dev', 'scripts:dev']);
 gulp.task('default', ['build:dev']);
