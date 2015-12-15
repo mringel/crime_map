@@ -1,3 +1,4 @@
+require('./leaflet');
 require('angular/angular');
 var angular = window.angular;
 require('./directives/angular-leaflet-directive');
