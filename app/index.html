@@ -28,7 +28,7 @@
             </ul>
         </div>
     </div>
-    <main data-ng-controller="SimpleMapController">
+    <main data-ng-controller="SimpleMapController" data-ng-init="getAll()">
     <div id="main">
         <div class="header">
             <h1>Seattle Police Report Map</h1>
@@ -36,14 +36,26 @@
         </div>
 
         <div class="content">
-            <leaflet height="800px" width="100%"></leaflet>
+            <leaflet geojson="crimes" lf-center="seattle" tiles="tiles" defaults="defaults" height="800px" width="100%"></leaflet>
 
             <div class="pure-menu pure-menu-horizontal">
-              <a href="#" class="pure-menu-heading pure-menu-link">CLEAR</a>
               <ul class="pure-menu-list">
-                <li class="pure-menu-item"><a href="#" class="pure-menu-link">Incident Type 1</a></li>
-                <li class="pure-menu-item"><a href="#" class="pure-menu-link">Incident Type 2</a></li>
-                <li class="pure-menu-item"><a href="#" class="pure-menu-link">Incident Type 3</a></li>
+                <li class="pure-menu-item">
+                  <button data-ng-click="addAll()" class="pure-button">Add to Map</button>
+                </li>
+
+                <li class="pure-menu-item">
+                  <button data-ng-click="changeTiles('openstreetmap')" class="pure-button">OpenStreetMaps</button>
+                </li>
+
+                <li class="pure-menu-item">
+                  <button data-ng-click="changeTiles('mapbox_dark')" class="pure-button">MapBox Dark</button>
+                </li>
+
+                <li class="pure-menu-item">
+                  <button data-ng-click="changeTiles('mapbox_light')" class="pure-button">MapBox Light</button></li>
+                </li>
+
               </ul>
             </div>
 

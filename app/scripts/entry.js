@@ -7,7 +7,40 @@ var crimeMapApp = angular.module('CrimeMapApp', ['leaflet-directive']);
 // require('./services/services')(crimeMapApp);
 // require('./directives/directives')(crimeMapApp);
 
-crimeMapApp.controller("SimpleMapController", [ '$scope', function($scope) {
+crimeMapApp.controller("SimpleMapController", [ '$scope', '$http', 'leafletData', function($scope, $http, leafletData) {
+  $scope.crimes = [];
+
+  $scope.getAll = function() {
+      $http.get('/api/crimes')
+        .then(function(res) {
+          $scope.crimes = res.data;
+        }, function(err) {
+          console.log(err.data);
+        });
+    };
+
+    $scope.addAll = function() {
+      leafletData.getMap().then(function(map) {
+        L.Icon.Default.imagePath = 'http://api.tiles.mapbox.com/mapbox.js/v1.0.0beta0.0/images';
+        L.geoJson($scope.crimes, {
+          onEachFeature: onEachFeature
+        }).addTo(map);
+      });
+    };
+
+    function onEachFeature(feature, layer) {
+      // layer.bindPopup("hi");
+      // if (feature.properties && feature.properties.offence_type) {
+      console.log(feature.properties.offense_type);
+      layer.bindPopup('offence type: ' + feature.properties.offense_type);
+      // }
+    }
+//
+//
+// L.geoJson(geojsonFeature, {
+//     onEachFeature: onEachFeature
+// }).addTo(map);
+
   var tilesDict = {
     openstreetmap: {
               url: "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
@@ -21,32 +54,42 @@ crimeMapApp.controller("SimpleMapController", [ '$scope', function($scope) {
                   attribution: 'All maps &copy; <a href="http://www.opencyclemap.org">OpenCycleMap</a>, map data &copy; <a href="http://www.openstreetmap.org">OpenStreetMap</a> (<a href="http://www.openstreetmap.org/copyright">ODbL</a>'
               }
           },
+
     mapbox_dark: {
               name: 'Mapbox Dark',
-              url: 'http://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
+              url: 'https://api.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
               type: 'xyz',
               options: {
-                  apikey: process.env.MAPBOX_PUBLIC_TOKEN,
-                  mapid: 'mapboox.dark'
+                  apikey: 'pk.eyJ1IjoibXJpbmdlbCIsImEiOiIwYjM4MzFkY2E3ZTEyNzAwNGM4M2VjODZlODlkNWZhNiJ9.EJlJwl9IJoBptQV_EARdYA',
+                  mapid: 'mapbox.dark'
               }
           },
-    mapbox_wheat: {
-              name: 'Mapbox Wheat Paste',
-              url: 'http://api.tiles.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
+    mapbox_light: {
+              name: 'Mapbox Light',
+              url: 'http://api.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
               type: 'xyz',
               options: {
-                  apikey: 'pk.eyJ1IjoiYnVmYW51dm9scyIsImEiOiJLSURpX0pnIn0.2_9NrLz1U9bpwMQBhVk97Q',
-                  mapid: 'bufanuvols.lia35jfp'
+                  apikey: 'pk.eyJ1IjoibXJpbmdlbCIsImEiOiIwYjM4MzFkY2E3ZTEyNzAwNGM4M2VjODZlODlkNWZhNiJ9.EJlJwl9IJoBptQV_EARdYA',
+                  mapid: 'mapbox.light'
               }
           }
       };
 
 
     angular.extend($scope, {
+        seattle: {
+          lat: 47.6,
+          lng: -122.33,
+          zoom: 12
+        },
         defaults: {
             scrollWheelZoom: false
         },
-        tiles: tilesDict.mapbox_dark
+        tiles: tilesDict.openstreetmap
     });
+
+    $scope.changeTiles = function(tiles) {
+               $scope.tiles = tilesDict[tiles];
+           };
 
 }]);
