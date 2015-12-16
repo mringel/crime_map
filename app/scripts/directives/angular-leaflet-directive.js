@@ -32,6 +32,7 @@
 *  angular-leaflet-directive - An AngularJS directive to easily interact with Leaflet maps
 *  git: https://github.com/tombatossals/angular-leaflet-directive
 */
+
 (function(angular){
 'use strict';
 angular.module('leaflet-directive', []).directive('leaflet', ["$q", "leafletData", "leafletMapDefaults", "leafletHelpers", "leafletMapEvents", function($q, leafletData, leafletMapDefaults, leafletHelpers, leafletMapEvents) {
