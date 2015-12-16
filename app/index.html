@@ -28,7 +28,7 @@
             </ul>
         </div>
     </div>
-    <main data-ng-controller="SimpleMapController">
+    <main data-ng-controller="MapController" data-ng-init="getAll()">
     <div id="main">
         <div class="header">
             <h1>Seattle Police Report Map</h1>
@@ -36,16 +36,32 @@
         </div>
 
         <div class="content">
-            <leaflet height="600px" width="100%" markers="markers" center="seattleCenter"></leaflet>
+            <leaflet geojson="crimes" lf-center="seattle" tiles="tiles" defaults="defaults" height="800px" width="100%"></leaflet>
 
+            <div class="pure-menu pure-menu-horizontal">
+              <ul class="pure-menu-list">
+                <li class="pure-menu-item">
+                  <button data-ng-click="addAll()" class="pure-button">Add to Map</button>
+                </li>
+
+                <li class="pure-menu-item">
+                  <button data-ng-click="changeTiles('openstreetmap')" class="pure-button">OpenStreetMaps</button>
+                </li>
+
+                <li class="pure-menu-item">
+                  <button data-ng-click="changeTiles('mapbox_dark')" class="pure-button">MapBox Dark</button>
+                </li>
+
+                <li class="pure-menu-item">
+                  <button data-ng-click="changeTiles('mapbox_light')" class="pure-button">MapBox Light</button></li>
+                </li>
+
+              </ul>
+            </div>
             <h2 class="content-subhead">How to use this layout</h2>
             <p>
                 To use this layout, you can just copy paste the HTML, along with the CSS in <a href="/css/layouts/side-menu.css" alt="Side Menu CSS">side-menu.css</a>, and the JavaScript in <a href="/js/ui.js">ui.js</a>. The JS file uses vanilla JavaScript to simply toggle an <code>active</code> class that makes the menu responsive.
             </p>
-            <select
-  ng-model="model.choice"
-  ng-options="idx as choice for (idx, choice) in choices">
-</select>
         </div>
     </div>
   </main>
