@@ -21,16 +21,17 @@ module.exports = function(app) {
           angular.forEach( $scope.selectedTypes, function( value, key ) {
             for(var x=0; x<$scope.selectedTypes.length; x++){
               $http.get('/api/internal/crimetypes/' + $scope.selectedTypes[x].name)
-                .then(function(res){
-                  leafletData.getMap().then(function(map) {
+              .then(function(res){
+                leafletData.getMap().then(function(map) {
                   L.Icon.Default.imagePath = 'http://api.tiles.mapbox.com/mapbox.js/v1.0.0beta0.0/images';
                   L.geoJson(res.data, {
-                    onEachFeature: onEachFeature
+                  onEachFeature: onEachFeature
                   }).addTo(map);
                 });
-                });
+              });
             }
           });
+          $scope.selectedTypes.length=0;
         };
 
 
