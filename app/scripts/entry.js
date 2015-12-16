@@ -6,6 +6,7 @@ require('./directives/angular-leaflet-directive');
 var crimeMapApp = angular.module('CrimeMapApp', ['leaflet-directive']);
 // require('./services/services')(crimeMapApp);
 // require('./directives/directives')(crimeMapApp);
+// require('./map/map')(crimeMapApp);
 
 crimeMapApp.controller("SimpleMapController", [ '$scope', '$http', 'leafletData', function($scope, $http, leafletData) {
   $scope.crimes = [];
