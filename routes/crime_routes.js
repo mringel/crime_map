@@ -42,7 +42,14 @@ crimeRouter.get('/internal/crimetypes', function(req, res) {
       if (err) return handleError(err, types);
       res.json(types);
   });
-})
+});
+
+crimeRouter.get('/internal/crimetypes/:crimeType', function(req, res) {
+  Crime.find({'properties.summarized_offense_description': req.params.crimeType}, function(err, data) {
+    if (err) return handleError(err, res);
+    res.json(data);
+  });
+});
 
 function callSPD (search, cb){
     requester('https://data.seattle.gov/resource/y7pv-r3kh.geojson?month=' + search, function (error, response, body) {
@@ -54,7 +61,6 @@ function callSPD (search, cb){
 };
 
 var params = {screen_name: 'nodejs'};
-
 function callTwitter (){
   client.get('search/tweets.json?q=&geocode=47.518501,-122.392868,1km&result_type=recent', params, function(error, tweets, response){
     if(error){

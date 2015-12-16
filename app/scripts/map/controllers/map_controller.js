@@ -1,9 +1,15 @@
 module.exports = function(app) {
   app.controller("MapController", [ '$scope', '$http', 'leafletData', function($scope, $http, leafletData) {
-    $scope.crimes = [];
 
-    $scope.getAll = function() {
-        $http.get('/api/crimes')
+    //all crimes
+    $scope.crimes = [];
+    //types of crimes in db
+    $scope.crimeTypes = [];
+    //crime types selected from dropdown
+    $scope.selectedTypes = [];
+
+        $scope.getAll = function() {
+          $http.get('/api/crimes')
           .then(function(res) {
             $scope.crimes = res.data;
           }, function(err) {
@@ -11,17 +17,36 @@ module.exports = function(app) {
           });
         };
 
-    //POPULATES DROPDOWN WITH INDEXED CRIME TYPES
-    $scope.choices = [];
-    $scope.getTypes = function() {
-      $http.get('/api/internal/crimetypes')
-        .then(function(res) {
-          $scope.choices = res.data;
-        }, function(err) {
-          console.log(err.data);
-        });
-    };
-    $scope.getTypes();
+        $scope.mapSelected = function(){
+          angular.forEach( $scope.selectedTypes, function( value, key ) {
+            for(var x=0; x<$scope.selectedTypes.length; x++){
+              $http.get('/api/internal/crimetypes/' + $scope.selectedTypes[x].name)
+                .then(function(res){
+                  leafletData.getMap().then(function(map) {
+                  L.Icon.Default.imagePath = 'http://api.tiles.mapbox.com/mapbox.js/v1.0.0beta0.0/images';
+                  L.geoJson(res.data, {
+                    onEachFeature: onEachFeature
+                  }).addTo(map);
+                });
+                });
+            }
+          });
+        };
+
+
+
+        //POPULATES DROPDOWN WITH INDEXED CRIME TYPES
+        $scope.getTypes = function() {
+          $http.get('/api/internal/crimetypes')
+            .then(function(res) {
+              for(var i=0; i<res.data.length; i++){
+                $scope.crimeTypes.push({name: res.data[i]});
+              }
+            }, function(err) {
+              console.log(err.data);
+            });
+        };
+        $scope.getTypes();
 
         $scope.addAll = function() {
           leafletData.getMap().then(function(map) {
