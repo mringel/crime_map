@@ -1,23 +1,12 @@
 module.exports = function(app) {
   app.controller("MapController", [ '$scope', '$http', 'leafletData', function($scope, $http, leafletData) {
 
-
-$scope.modernBrowsers = [
-    {              name: "Opera",              maker: "(Opera Software)",        ticked: true  },
-    {    name: "Internet Explorer",  maker: "(Microsoft)",             ticked: false },
-    {         name: "Firefox",            maker: "(Mozilla Foundation)",    ticked: true  },
-    {       name: "Safari",             maker: "(Apple)",                 ticked: false },
-    {               name: "Chrome",             maker: "(Google)",                ticked: true  }
-];
-
-
-
     //all crimes
     $scope.crimes = [];
     //types of crimes in db
     $scope.crimeTypes = [];
     //crime types selected from dropdown
-    $scope.typeSelection = [];
+    $scope.selectedTypes = [];
 
         $scope.getAll = function() {
           $http.get('/api/crimes')
@@ -27,6 +16,24 @@ $scope.modernBrowsers = [
             console.log(err.data);
           });
         };
+
+        $scope.mapSelected = function(){
+          angular.forEach( $scope.selectedTypes, function( value, key ) {
+            for(var x=0; x<$scope.selectedTypes.length; x++){
+              $http.get('/api/internal/crimetypes/' + $scope.selectedTypes[x].name)
+                .then(function(res){
+                  leafletData.getMap().then(function(map) {
+                  L.Icon.Default.imagePath = 'http://api.tiles.mapbox.com/mapbox.js/v1.0.0beta0.0/images';
+                  L.geoJson(res.data, {
+                    onEachFeature: onEachFeature
+                  }).addTo(map);
+                });
+                });
+            }
+          });
+        };
+
+
 
         //POPULATES DROPDOWN WITH INDEXED CRIME TYPES
         $scope.getTypes = function() {

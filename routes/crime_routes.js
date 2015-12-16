@@ -45,7 +45,7 @@ crimeRouter.get('/internal/crimetypes', function(req, res) {
   });
 });
 
-crimeRouter.get('/internal/crimestypes/:crimeType', function(req, res) {
+crimeRouter.get('/internal/crimetypes/:crimeType', function(req, res) {
   Crime.find({'properties.summarized_offense_description': req.params.crimeType}, function(err, data) {
     if (err) return handleError(err, res);
     res.json(data);
