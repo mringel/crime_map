@@ -29,7 +29,6 @@ crimeRouter.get('/externalSPD/:month', function(req, res) {
 crimeRouter.get('/crimes', function(req, res) {
   Crime.find({}, function(err, data) {
     if (err) return handleError(err, res);
-
     res.json(data);
   });
 });

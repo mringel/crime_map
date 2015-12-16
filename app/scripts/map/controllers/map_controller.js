@@ -11,6 +11,18 @@ module.exports = function(app) {
           });
         };
 
+    //POPULATES DROPDOWN WITH INDEXED CRIME TYPES
+    $scope.choices = [];
+    $scope.getTypes = function() {
+      $http.get('/api/internal/crimetypes')
+        .then(function(res) {
+          $scope.choices = res.data;
+        }, function(err) {
+          console.log(err.data);
+        });
+    };
+    $scope.getTypes();
+
         $scope.addAll = function() {
           leafletData.getMap().then(function(map) {
             L.Icon.Default.imagePath = 'http://api.tiles.mapbox.com/mapbox.js/v1.0.0beta0.0/images';
