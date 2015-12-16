@@ -19,6 +19,7 @@ $scope.modernBrowsers = [
     //crime types selected from dropdown
     $scope.typeSelection = [];
 
+        // Populates $scope.crimes with everything currently in the database
         $scope.getAll = function() {
           $http.get('/api/crimes')
           .then(function(res) {
@@ -41,6 +42,7 @@ $scope.modernBrowsers = [
         };
         $scope.getTypes();
 
+        // Adds everything in $scope.crimes to the map
         $scope.addAll = function() {
           leafletData.getMap().then(function(map) {
             L.Icon.Default.imagePath = 'http://api.tiles.mapbox.com/mapbox.js/v1.0.0beta0.0/images';
@@ -50,18 +52,16 @@ $scope.modernBrowsers = [
           });
         };
 
+        $scope.popupClicker= function() {
+          console.log('This feature has been clicked: ');
+        };
+
+        // Called on each feature when plotted to attach popup
         function onEachFeature(feature, layer) {
-          // if (feature.properties && feature.properties.offence_type) {
-          // console.log(feature.properties.offense_type);
-          layer.bindPopup('offence type: ' + feature.properties.offense_type + '\n' +
-            'occurred_date_or_date_range_start: ' + feature.properties.occurred_date_or_date_range_start);
-          // }
+          layer.bindPopup('offense type: ' + feature.properties.offense_type + '\n' +
+            'occurred_date_or_date_range_start: ' + feature.properties.occurred_date_or_date_range_start +
+          '<button class="pure-button" data-ng-click="popupClicker()">click me!</button>' );
         }
-        //
-        //
-        // L.geoJson(geojsonFeature, {
-        //     onEachFeature: onEachFeature
-        // }).addTo(map);
 
         var tilesDict = {
           openstreetmap: {
