@@ -36,12 +36,16 @@
         </div>
 
         <div class="content">
-            <leaflet height="600px" width="100%"></leaflet>
+            <leaflet height="600px" width="100%" markers="markers" center="seattleCenter"></leaflet>
 
             <h2 class="content-subhead">How to use this layout</h2>
             <p>
                 To use this layout, you can just copy paste the HTML, along with the CSS in <a href="/css/layouts/side-menu.css" alt="Side Menu CSS">side-menu.css</a>, and the JavaScript in <a href="/js/ui.js">ui.js</a>. The JS file uses vanilla JavaScript to simply toggle an <code>active</code> class that makes the menu responsive.
             </p>
+            <select
+  ng-model="model.choice"
+  ng-options="idx as choice for (idx, choice) in choices">
+</select>
         </div>
     </div>
   </main>

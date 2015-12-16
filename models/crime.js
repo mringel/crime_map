@@ -31,4 +31,9 @@ var crimeSchema = new mongoose.Schema({
   }
 });
 crimeSchema.plugin(uniqueValidator);
+crimeSchema.index( {
+    "location_zip": 1,
+    "summarized_offense_description": 1,
+    "occurred_date_or_date_range_start": 1,
+    "occurred_date_range_end": 1 } );
 module.exports = mongoose.model('Crime', crimeSchema);

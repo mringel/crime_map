@@ -31,6 +31,12 @@ crimeRouter.get('/externalTWITTER/:month', function(req, res) {
   res.json('');
 });
 
+crimeRouter.get('/internal/crimetypes', function(req, res) {
+  Crime.find().distinct('properties.summarized_offense_description', function(err, types) {
+      if (err) return handleError(err, types);
+      res.json(types);
+  });
+})
 
 function callSPD (search, cb){
     requester('https://data.seattle.gov/resource/y7pv-r3kh.geojson?month=' + search, function (error, response, body) {
