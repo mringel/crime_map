@@ -9,6 +9,7 @@
   "author": "Dustin Noyes <dustin.noyes@gmail.com>",
   "license": "ISC",
   "dependencies": {
+    "angularjs-datepicker": "^0.2.16",
     "body-parser": "^1.14.1",
     "dotenv": "^1.2.0",
     "express": "^4.13.3",

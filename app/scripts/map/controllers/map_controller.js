@@ -34,8 +34,6 @@ module.exports = function(app) {
           $scope.selectedTypes.length=0;
         };
 
-
-
         //POPULATES DROPDOWN WITH INDEXED CRIME TYPES
         $scope.getTypes = function() {
           $http.get('/api/internal/crimetypes')
