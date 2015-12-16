@@ -1,9 +1,26 @@
 module.exports = function(app) {
   app.controller("MapController", [ '$scope', '$http', 'leafletData', function($scope, $http, leafletData) {
-    $scope.crimes = [];
 
-    $scope.getAll = function() {
-        $http.get('/api/crimes')
+
+$scope.modernBrowsers = [
+    {              name: "Opera",              maker: "(Opera Software)",        ticked: true  },
+    {    name: "Internet Explorer",  maker: "(Microsoft)",             ticked: false },
+    {         name: "Firefox",            maker: "(Mozilla Foundation)",    ticked: true  },
+    {       name: "Safari",             maker: "(Apple)",                 ticked: false },
+    {               name: "Chrome",             maker: "(Google)",                ticked: true  }
+];
+
+
+
+    //all crimes
+    $scope.crimes = [];
+    //types of crimes in db
+    $scope.crimeTypes = [];
+    //crime types selected from dropdown
+    $scope.typeSelection = [];
+
+        $scope.getAll = function() {
+          $http.get('/api/crimes')
           .then(function(res) {
             $scope.crimes = res.data;
           }, function(err) {
@@ -11,17 +28,18 @@ module.exports = function(app) {
           });
         };
 
-    //POPULATES DROPDOWN WITH INDEXED CRIME TYPES
-    $scope.choices = [];
-    $scope.getTypes = function() {
-      $http.get('/api/internal/crimetypes')
-        .then(function(res) {
-          $scope.choices = res.data;
-        }, function(err) {
-          console.log(err.data);
-        });
-    };
-    $scope.getTypes();
+        //POPULATES DROPDOWN WITH INDEXED CRIME TYPES
+        $scope.getTypes = function() {
+          $http.get('/api/internal/crimetypes')
+            .then(function(res) {
+              for(var i=0; i<res.data.length; i++){
+                $scope.crimeTypes.push({name: res.data[i]});
+              }
+            }, function(err) {
+              console.log(err.data);
+            });
+        };
+        $scope.getTypes();
 
         $scope.addAll = function() {
           leafletData.getMap().then(function(map) {

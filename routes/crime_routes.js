@@ -43,7 +43,14 @@ crimeRouter.get('/internal/crimetypes', function(req, res) {
       if (err) return handleError(err, types);
       res.json(types);
   });
-})
+});
+
+crimeRouter.get('/internal/crimestypes/:crimeType', function(req, res) {
+  Crime.find({'properties.summarized_offense_description': req.params.crimeType}, function(err, data) {
+    if (err) return handleError(err, res);
+    res.json(data);
+  });
+});
 
 function callSPD (search, cb){
     requester('https://data.seattle.gov/resource/y7pv-r3kh.geojson?month=' + search, function (error, response, body) {
@@ -55,7 +62,6 @@ function callSPD (search, cb){
 };
 
 var params = {screen_name: 'nodejs'};
-
 function callTwitter (){
   client.get('statuses/user_timeline', params, function(error, tweets, response){
     if(error){
