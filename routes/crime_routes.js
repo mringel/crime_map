@@ -33,9 +33,8 @@ crimeRouter.get('/crimes', function(req, res) {
   });
 });
 
-crimeRouter.get('/externalTWITTER/:month', function(req, res) {
-  var result = callTwitter();
-  res.json('');
+crimeRouter.get('/tweets', function(req, res) {
+  callTwitter();
 });
 
 crimeRouter.get('/internal/crimetypes', function(req, res) {
@@ -57,7 +56,7 @@ function callSPD (search, cb){
 var params = {screen_name: 'nodejs'};
 
 function callTwitter (){
-  client.get('statuses/user_timeline', params, function(error, tweets, response){
+  client.get('search/tweets.json?q=&geocode=47.518501,-122.392868,1km&result_type=recent', params, function(error, tweets, response){
     if(error){
       console.log(error);
     }
