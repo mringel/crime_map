@@ -7,6 +7,8 @@ module.exports = function(app) {
     $scope.crimeTypes = [];
     //crime types selected from dropdown
     $scope.selectedTypes = [];
+    $scope.startDate = new Date('January 1, 1970 00:00:00');;
+    $scope.endDate = new Date();
 
 
         //GETS ALL CRIMES IN DB
@@ -33,7 +35,12 @@ module.exports = function(app) {
         $scope.mapSelected = function(){
           angular.forEach( $scope.selectedTypes, function( value, key ) {
             for(var x=0; x<$scope.selectedTypes.length; x++){
-              $http.get('/api/internal/crimetypes/' + $scope.selectedTypes[x].name)
+              $http.get('/api/internal/crimetypes/'
+                + $scope.selectedTypes[x].name
+                + '/'
+                + $scope.startDate
+                + '/'
+                + $scope.endDate)
               .then(function(res){
                 leafletData.getMap().then(function(map) {
                   L.Icon.Default.imagePath = 'http://api.tiles.mapbox.com/mapbox.js/v1.0.0beta0.0/images';
