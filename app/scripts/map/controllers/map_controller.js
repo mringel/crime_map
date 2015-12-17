@@ -8,6 +8,7 @@ module.exports = function(app) {
     //crime types selected from dropdown
     $scope.selectedTypes = [];
 
+        //GETS ALL CRIMES IN DB
         $scope.getAll = function() {
           $http.get('/api/crimes')
           .then(function(res) {
@@ -17,6 +18,17 @@ module.exports = function(app) {
           });
         };
 
+        //ADDS ALL CRIMES IN DB TO MAP
+        $scope.addAll = function() {
+          leafletData.getMap().then(function(map) {
+            L.Icon.Default.imagePath = 'http://api.tiles.mapbox.com/mapbox.js/v1.0.0beta0.0/images';
+            L.geoJson($scope.crimes, {
+              onEachFeature: onEachFeature
+            }).addTo(map);
+          });
+        };
+
+        //USES SELECTED VALUES FROM DROPDOWN TO FETCH MATCHING CRIMES AND MAP
         $scope.mapSelected = function(){
           angular.forEach( $scope.selectedTypes, function( value, key ) {
             for(var x=0; x<$scope.selectedTypes.length; x++){
@@ -46,15 +58,6 @@ module.exports = function(app) {
             });
         };
         $scope.getTypes();
-
-        $scope.addAll = function() {
-          leafletData.getMap().then(function(map) {
-            L.Icon.Default.imagePath = 'http://api.tiles.mapbox.com/mapbox.js/v1.0.0beta0.0/images';
-            L.geoJson($scope.crimes, {
-              onEachFeature: onEachFeature
-            }).addTo(map);
-          });
-        };
 
         function onEachFeature(feature, layer) {
           // if (feature.properties && feature.properties.offence_type) {
