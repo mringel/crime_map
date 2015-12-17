@@ -11,6 +11,11 @@ gulp.task('static:dev', function() {
   .pipe(gulp.dest('build/'));
 });
 
+gulp.task('images:dev', function() {
+  gulp.src('app/images/**/*')
+  .pipe(gulp.dest('build/images/'));
+});
+
 gulp.task('webpack:dev', function() {
   return gulp.src('app/js/entry.js')
   .pipe(webpack({
