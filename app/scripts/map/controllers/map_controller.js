@@ -111,7 +111,8 @@ module.exports = function(app) {
             type: 'xyz',
             options: {
               apikey: 'pk.eyJ1IjoibXJpbmdlbCIsImEiOiIwYjM4MzFkY2E3ZTEyNzAwNGM4M2VjODZlODlkNWZhNiJ9.EJlJwl9IJoBptQV_EARdYA',
-              mapid: 'mapbox.dark'
+              mapid: 'mapbox.dark',
+              attribution: '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
             }
           },
           mapbox_light: {
@@ -120,7 +121,8 @@ module.exports = function(app) {
             type: 'xyz',
             options: {
               apikey: 'pk.eyJ1IjoibXJpbmdlbCIsImEiOiIwYjM4MzFkY2E3ZTEyNzAwNGM4M2VjODZlODlkNWZhNiJ9.EJlJwl9IJoBptQV_EARdYA',
-              mapid: 'mapbox.light'
+              mapid: 'mapbox.light',
+              attribution: '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
             }
           }
         };
