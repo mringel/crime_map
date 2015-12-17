@@ -1,5 +1,5 @@
 module.exports = function(app) {
-  app.controller("MapController", [ '$scope', '$http', 'leafletData', function($scope, $http, leafletData) {
+  app.controller("MapController", [ '$scope', '$http', 'leafletData', '$compile', function($scope, $http, leafletData, $compile) {
 
     //all crimes
     $scope.crimes = [];
@@ -58,15 +58,27 @@ module.exports = function(app) {
           });
         };
 
-        $scope.popupClicker= function() {
-          console.log('This feature has been clicked: ');
+
+        $scope.$on('leafletDirectiveMap.popupopen', function(event, args) {
+          var feature = args.leafletEvent.popup.options.feature;
+          var newScope = $scope.$new();
+          newScope.stream = feature;
+          $compile(args.leafletEvent.popup._contentNode)(newScope);
+        });
+
+        $scope.popupClicker= function(lat, long, time) {
+          console.log('The lat/long of this feature is: ', lat, long +
+            '\nCrime occured or began at: ', time);
         };
 
         // Called on each feature when plotted to attach popup
         function onEachFeature(feature, layer) {
+          var time = feature.properties.occurred_date_or_date_range_start.split('-');
+          yearMonthDay = time.slice(0,2).join('');
+          yearMonthDay += (time[2].split('T')[0]);
           layer.bindPopup('offense type: ' + feature.properties.offense_type + '\n' +
             'occurred_date_or_date_range_start: ' + feature.properties.occurred_date_or_date_range_start +
-          '<button class="pure-button" data-ng-click="popupClicker()">click me!</button>' );
+            '<button class="pure-button" data-ng-click="popupClicker('+feature.properties.latitude+','+feature.properties.longitude+', '+yearMonthDay+')">click me!</button>' );
         }
 
         var tilesDict = {
