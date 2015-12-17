@@ -1,5 +1,5 @@
 module.exports = function(app) {
-  app.controller("MapController", [ '$scope', '$http', 'leafletData', function($scope, $http, leafletData) {
+  app.controller("MapController", [ '$scope', '$http', 'leafletData', '$compile', function($scope, $http, leafletData, $compile) {
 
     //all crimes
     $scope.crimes = [];
@@ -7,6 +7,9 @@ module.exports = function(app) {
     $scope.crimeTypes = [];
     //crime types selected from dropdown
     $scope.selectedTypes = [];
+    $scope.startDate = new Date('January 1, 1970 00:00:00');;
+    $scope.endDate = new Date();
+
 
         //GETS ALL CRIMES IN DB
         $scope.getAll = function() {
@@ -32,7 +35,12 @@ module.exports = function(app) {
         $scope.mapSelected = function(){
           angular.forEach( $scope.selectedTypes, function( value, key ) {
             for(var x=0; x<$scope.selectedTypes.length; x++){
-              $http.get('/api/internal/crimetypes/' + $scope.selectedTypes[x].name)
+              $http.get('/api/internal/crimetypes/'
+                + $scope.selectedTypes[x].name
+                + '/'
+                + $scope.startDate
+                + '/'
+                + $scope.endDate)
               .then(function(res){
                 leafletData.getMap().then(function(map) {
                   L.Icon.Default.imagePath = 'http://api.tiles.mapbox.com/mapbox.js/v1.0.0beta0.0/images';
@@ -59,18 +67,29 @@ module.exports = function(app) {
         };
         $scope.getTypes();
 
+
+        $scope.$on('leafletDirectiveMap.popupopen', function(event, args) {
+          var feature = args.leafletEvent.popup.options.feature;
+          var newScope = $scope.$new();
+          newScope.stream = feature;
+          $compile(args.leafletEvent.popup._contentNode)(newScope);
+        });
+
+        $scope.popupClicker= function(lat, long, time) {
+          console.log('The lat/long of this feature is: ', lat, long +
+            '\nCrime occured or began at: ', time);
+        };
+
+        // Called on each feature when plotted to attach popup
+
         function onEachFeature(feature, layer) {
-          // if (feature.properties && feature.properties.offence_type) {
-          // console.log(feature.properties.offense_type);
-          layer.bindPopup('offence type: ' + feature.properties.offense_type + '\n' +
-            'occurred_date_or_date_range_start: ' + feature.properties.occurred_date_or_date_range_start);
-          // }
+          var time = feature.properties.occurred_date_or_date_range_start.split('-');
+          yearMonthDay = time.slice(0,2).join('');
+          yearMonthDay += (time[2].split('T')[0]);
+          layer.bindPopup('offense type: ' + feature.properties.offense_type + '\n' +
+            'occurred_date_or_date_range_start: ' + feature.properties.occurred_date_or_date_range_start +
+            '<button class="pure-button" data-ng-click="popupClicker('+feature.properties.latitude+','+feature.properties.longitude+', '+yearMonthDay+')">click me!</button>' );
         }
-        //
-        //
-        // L.geoJson(geojsonFeature, {
-        //     onEachFeature: onEachFeature
-        // }).addTo(map);
 
         var tilesDict = {
           openstreetmap: {
