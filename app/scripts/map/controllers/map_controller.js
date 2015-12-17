@@ -8,7 +8,8 @@ module.exports = function(app) {
     //crime types selected from dropdown
     $scope.selectedTypes = [];
 
-        // Populates $scope.crimes with everything currently in the database
+
+        //GETS ALL CRIMES IN DB
         $scope.getAll = function() {
           $http.get('/api/crimes')
           .then(function(res) {
@@ -18,6 +19,17 @@ module.exports = function(app) {
           });
         };
 
+        //ADDS ALL CRIMES IN DB TO MAP
+        $scope.addAll = function() {
+          leafletData.getMap().then(function(map) {
+            L.Icon.Default.imagePath = 'http://api.tiles.mapbox.com/mapbox.js/v1.0.0beta0.0/images';
+            L.geoJson($scope.crimes, {
+              onEachFeature: onEachFeature
+            }).addTo(map);
+          });
+        };
+
+        //USES SELECTED VALUES FROM DROPDOWN TO FETCH MATCHING CRIMES AND MAP
         $scope.mapSelected = function(){
           angular.forEach( $scope.selectedTypes, function( value, key ) {
             for(var x=0; x<$scope.selectedTypes.length; x++){
@@ -48,16 +60,6 @@ module.exports = function(app) {
         };
         $scope.getTypes();
 
-        // Adds everything in $scope.crimes to the map
-        $scope.addAll = function() {
-          leafletData.getMap().then(function(map) {
-            L.Icon.Default.imagePath = 'http://api.tiles.mapbox.com/mapbox.js/v1.0.0beta0.0/images';
-            L.geoJson($scope.crimes, {
-              onEachFeature: onEachFeature
-            }).addTo(map);
-          });
-        };
-
 
         $scope.$on('leafletDirectiveMap.popupopen', function(event, args) {
           var feature = args.leafletEvent.popup.options.feature;
@@ -72,6 +74,7 @@ module.exports = function(app) {
         };
 
         // Called on each feature when plotted to attach popup
+
         function onEachFeature(feature, layer) {
           var time = feature.properties.occurred_date_or_date_range_start.split('-');
           yearMonthDay = time.slice(0,2).join('');
