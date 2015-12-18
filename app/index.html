@@ -33,7 +33,7 @@
         <div class="header">
             <h1>Crime Map App - Seattle</h1>
         </div>
-
+        <button ng-click="markers.m1.icon=leafIcon">Leaflet Icon</button>
         <div class="content">
 
             <div class="pure-menu pure-menu-horizontal">
@@ -87,7 +87,7 @@
 
             </div>
 
-            <leaflet geojson="crimes" lf-center="seattle" tiles="tiles" defaults="defaults" height="600px" width="%"></leaflet>
+            <leaflet geojson="crimes" lf-center="seattle" tiles="tiles" defaults="defaults" height="600px" width="%" markers="markers"></leaflet>
                <!--  To use this layout...uses vanilla JavaScript to simply toggle an "active" class that makes the menu responsive. -->
 
         </div>
