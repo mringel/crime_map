@@ -14,6 +14,13 @@ module.exports = function(app) {
     $scope.endDate = new Date();
     $scope.tweets = [];
 
+    // initialize a leaflet layergroup and add it to the map for better layer control
+    $scope.layerGroup = null;
+    leafletData.getMap().then(function(map) {
+      $scope.layerGroup = L.layerGroup().addTo(map);
+    });
+
+
         //GETS ALL CRIMES IN DB
         $scope.getAll = function() {
           $http.get('/api/crimes')
@@ -48,9 +55,15 @@ module.exports = function(app) {
               .then(function(res){
                 leafletData.getMap().then(function(map) {
                   L.Icon.Default.imagePath = './images/leaflet';
-                  $scope.mapLayers.push(L.geoJson(res.data, {
-                  onEachFeature: onEachFeature
-                }).addTo(map));
+                  var newLayer = L.geoJson(res.data, {
+                    onEachFeature: onEachFeature
+                  });
+                  $scope.layerGroup.addLayer(newLayer);
+                  map.fitBounds(newLayer);
+
+                //   $scope.mapLayers.push(L.geoJson(res.data, {
+                //   onEachFeature: onEachFeature
+                // }).addTo(map));
                 });
               });
             }
@@ -60,10 +73,7 @@ module.exports = function(app) {
         // removes layers that have been plotted on the map
         $scope.clearMap = function() {
           leafletData.getMap().then(function(map) {
-            for (var i = 0; i < $scope.mapLayers.length; i++) {
-              map.removeLayer($scope.mapLayers[i]);
-            }
-            $scope.mapLayers = [];
+            $scope.layerGroup.clearLayers();
           });
         };
 
@@ -111,15 +121,16 @@ module.exports = function(app) {
           yearMonthDay = time.slice(0,2).join('');
           yearMonthDay += (time[2].split('T')[0]);
 
-          // layer.bindPopup('<div><p> <b>offense type:</b> '
-          //   + feature.properties.offense_type + '<br>' + '<b>occurred on:</b> '
-          //   + feature.properties.occurred_date_or_date_range_start + '<br></p>'
-          //   + '<button class="pure-button" data-ng-click="popupClicker('
-          //   + feature.properties.latitude + ',' + feature.properties.longitude
-          //   + ', ' + yearMonthDay + ')">click me!</button></div>' );
-          layer.bindPopup('offense type: ' + feature.properties.offense_type + '\n' +
-            'occurred_date_or_date_range_start: ' + feature.properties.occurred_date_or_date_range_start +
-            '<button class="pure-button" data-ng-click="popupClicker('+feature.properties.latitude+','+feature.properties.longitude+', '+yearMonthDay+')">Nearby Tweets</button>' );
+          layer.bindPopup('<div><p> <b>offense type:</b> '
+            + feature.properties.offense_type + '<br>' + '<b>occurred on:</b> '
+            + feature.properties.occurred_date_or_date_range_start + '<br></p>'
+            + '<button class="pure-button" data-ng-click="popupClicker('
+            + feature.properties.latitude + ',' + feature.properties.longitude
+            + ', ' + yearMonthDay + ')">Nearby Tweets</button></div>' );
+
+          // layer.bindPopup('offense type: ' + feature.properties.offense_type + '\n' +
+          //   'occurred_date_or_date_range_start: ' + feature.properties.occurred_date_or_date_range_start +
+          //   '<button class="pure-button" data-ng-click="popupClicker('+feature.properties.latitude+','+feature.properties.longitude+', '+yearMonthDay+')">Nearby Tweets</button>' );
         }
 
         var tilesDict = {
