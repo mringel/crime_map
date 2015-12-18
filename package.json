@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "node server.js",
-    "postinstall": "gulp"
+    "postinstall": "gulp default"
   },
   "author": "Dustin Noyes <dustin.noyes@gmail.com>",
   "license": "ISC",
