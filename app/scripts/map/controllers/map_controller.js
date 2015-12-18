@@ -10,7 +10,7 @@ module.exports = function(app) {
 
     // layers that are currently on the map
     $scope.mapLayers = [];
-    $scope.startDate = new Date('January 1, 1970 00:00:00');;
+    $scope.startDate;
     $scope.endDate = new Date();
 
 
@@ -36,7 +36,8 @@ module.exports = function(app) {
 
         //USES SELECTED VALUES FROM DROPDOWN TO FETCH MATCHING CRIMES AND MAP
         $scope.mapSelected = function(){
-          angular.forEach( $scope.selectedTypes, function( value, key ) {
+          $scope.clearMap();
+          angular.forEach($scope.selectedTypes, function( value, key ) {
             for(var x=0; x<$scope.selectedTypes.length; x++){
               $http.get('/api/internal/crimetypes/'
                 + $scope.selectedTypes[x].name
@@ -54,7 +55,6 @@ module.exports = function(app) {
               });
             }
           });
-          $scope.selectedTypes.length=0;
         };
 
         $scope.clearMap = function() {
@@ -150,8 +150,8 @@ module.exports = function(app) {
     $scope.maxDate = new Date();
 
     function daysInMonth(month,year) {
-      return new Date(today.getFullYear(), today.getMonth()+1, 0);
-    };
+      return new Date(year, month, 0).getDate();
+    }
 
     $scope.renderEnd = function(){
       $scope.minDate = new Date(
@@ -162,7 +162,7 @@ module.exports = function(app) {
       $scope.maxDate = new Date(
         $scope.startDate.getFullYear(),
         $scope.startDate.getMonth(),
-        $scope.startDate.getDate()+daysInMonth($scope.startDate.getMonth(),$scope.startDate.getFullYear())
+        $scope.startDate.getDate() + (daysInMonth($scope.startDate.getMonth()+1, $scope.startDate.getYear()) - $scope.startDate.getDate())
       );
     }
     //END DATE RENDERING

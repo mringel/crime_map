@@ -12,8 +12,8 @@ gulp.task('static:dev', function() {
 });
 
 gulp.task('images:dev', function() {
-  gulp.src('app/images/**/*')
-  .pipe(gulp.dest('build/images/'));
+  gulp.src('app/images/leaflet/*.png')
+  .pipe(gulp.dest('build/images/leaflet/'));
 });
 
 gulp.task('webpack:dev', function() {
@@ -64,5 +64,5 @@ gulp.task('webpack:test', function() {
   .pipe(gulp.dest('test/client/'));
 });
 
-gulp.task('build:dev', ['webpack:dev', 'static:dev', 'styles:dev', 'scripts:dev']);
+gulp.task('build:dev', ['webpack:dev', 'static:dev', 'styles:dev', 'scripts:dev', 'images:dev']);
 gulp.task('default', ['build:dev']);
