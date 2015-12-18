@@ -5,7 +5,7 @@
   <link rel="stylesheet" href="styles/main.css" />
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title></title>
+  <title>Seattle Crime Map</title>
   <link rel="stylesheet" type="text/css" href="styles/main.css">
 
 </head>
@@ -31,12 +31,10 @@
     <main data-ng-controller="MapController" data-ng-init="getAll()">
     <div id="main">
         <div class="header">
-            <h1>Seattle Police Report Map</h1>
-            <h2>Neighborhood Watch</h2>
+            <h1>Crime Map App - Seattle</h1>
         </div>
 
         <div class="content">
-            <leaflet geojson="crimes" lf-center="seattle" tiles="tiles" defaults="defaults" height="800px" width="100%"></leaflet>
 
             <div class="pure-menu pure-menu-horizontal">
               <ul class="pure-menu-list">
@@ -88,10 +86,9 @@
             </div>
 
             </div>
-            <h2 class="content-subhead">How to use this layout</h2>
-            <p>
-                To use this layout...uses vanilla JavaScript to simply toggle an <code>active</code> class that makes the menu responsive.
-            </p>
+
+            <leaflet geojson="crimes" lf-center="seattle" tiles="tiles" defaults="defaults" height="600px" width="%"></leaflet>
+               <!--  To use this layout...uses vanilla JavaScript to simply toggle an "active" class that makes the menu responsive. -->
 
         </div>
     </div>

@@ -57,11 +57,13 @@ module.exports = function(app) {
           });
         };
 
+        // removes layers that have been plotted on the map
         $scope.clearMap = function() {
           leafletData.getMap().then(function(map) {
             for (var i = 0; i < $scope.mapLayers.length; i++) {
               map.removeLayer($scope.mapLayers[i]);
             }
+            $scope.mapLayers = [];
           });
         };
 
@@ -97,9 +99,12 @@ module.exports = function(app) {
           var time = feature.properties.occurred_date_or_date_range_start.split('-');
           yearMonthDay = time.slice(0,2).join('');
           yearMonthDay += (time[2].split('T')[0]);
-          layer.bindPopup('offense type: ' + feature.properties.offense_type + '\n' +
-            'occurred_date_or_date_range_start: ' + feature.properties.occurred_date_or_date_range_start +
-            '<button class="pure-button" data-ng-click="popupClicker('+feature.properties.latitude+','+feature.properties.longitude+', '+yearMonthDay+')">click me!</button>' );
+          layer.bindPopup('<div><p> <b>offense type:</b> '
+            + feature.properties.offense_type + '<br>' + '<b>occurred on:</b> '
+            + feature.properties.occurred_date_or_date_range_start + '<br></p>'
+            + '<button class="pure-button" data-ng-click="popupClicker('
+            + feature.properties.latitude + ',' + feature.properties.longitude
+            + ', ' + yearMonthDay + ')">click me!</button></div>' );
         }
 
         var tilesDict = {
