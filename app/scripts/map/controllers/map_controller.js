@@ -1,15 +1,16 @@
 module.exports = function(app) {
   app.controller("MapController", [ '$scope', '$http', 'leafletData', '$compile', function($scope, $http, leafletData, $compile) {
 
-    //all crimes
+    //all crimes (deprecated)
     $scope.crimes = [];
     //types of crimes in db
     $scope.crimeTypes = [];
     //crime types selected from dropdown
     $scope.selectedTypes = [];
 
-    // layers that are currently on the map
+    // layers that are currently on the map (deprecated by $scope.layerGroup)
     $scope.mapLayers = [];
+
     $scope.startDate;
     $scope.endDate = new Date();
     $scope.tweets = [];
@@ -21,7 +22,7 @@ module.exports = function(app) {
     });
 
 
-        //GETS ALL CRIMES IN DB
+        //GETS ALL CRIMES IN DB (deprecated, not used in current master)
         $scope.getAll = function() {
           $http.get('/api/crimes')
           .then(function(res) {
@@ -31,7 +32,7 @@ module.exports = function(app) {
           });
         };
 
-        //ADDS ALL CRIMES IN DB TO MAP
+        //ADDS ALL CRIMES IN DB TO MAP (deprecated)
         $scope.addAll = function() {
           leafletData.getMap().then(function(map) {
             L.Icon.Default.imagePath = './images/leaflet';
@@ -60,10 +61,6 @@ module.exports = function(app) {
                   });
                   $scope.layerGroup.addLayer(newLayer);
                   map.fitBounds(newLayer);
-
-                //   $scope.mapLayers.push(L.geoJson(res.data, {
-                //   onEachFeature: onEachFeature
-                // }).addTo(map));
                 });
               });
             }
@@ -72,9 +69,7 @@ module.exports = function(app) {
 
         // removes layers that have been plotted on the map
         $scope.clearMap = function() {
-          leafletData.getMap().then(function(map) {
-            $scope.layerGroup.clearLayers();
-          });
+          $scope.layerGroup.clearLayers();
         };
 
         //POPULATES DROPDOWN WITH INDEXED CRIME TYPES
@@ -90,7 +85,7 @@ module.exports = function(app) {
         };
         $scope.getTypes();
 
-
+        // get's code inserted into DOM by leaflet popup compiled into angular
         $scope.$on('leafletDirectiveMap.popupopen', function(event, args) {
           var feature = args.leafletEvent.popup.options.feature;
           var newScope = $scope.$new();
@@ -98,6 +93,7 @@ module.exports = function(app) {
           $compile(args.leafletEvent.popup._contentNode)(newScope);
         });
 
+        // function that is called when button in popup is clicked
         $scope.popupClicker= function(lat, long, time) {
           // console.log('The lat/long of this feature is: ', lat, long +
           //   '\nCrime occured or began at: ', time);
@@ -115,7 +111,6 @@ module.exports = function(app) {
         };
 
         // Called on each feature when plotted to attach popup
-
         function onEachFeature(feature, layer) {
           var time = feature.properties.occurred_date_or_date_range_start.split('-');
           yearMonthDay = time.slice(0,2).join('');
@@ -127,10 +122,6 @@ module.exports = function(app) {
             + '<button class="pure-button" data-ng-click="popupClicker('
             + feature.properties.latitude + ',' + feature.properties.longitude
             + ', ' + yearMonthDay + ')">Nearby Tweets</button></div>' );
-
-          // layer.bindPopup('offense type: ' + feature.properties.offense_type + '\n' +
-          //   'occurred_date_or_date_range_start: ' + feature.properties.occurred_date_or_date_range_start +
-          //   '<button class="pure-button" data-ng-click="popupClicker('+feature.properties.latitude+','+feature.properties.longitude+', '+yearMonthDay+')">Nearby Tweets</button>' );
         }
 
         var tilesDict = {
