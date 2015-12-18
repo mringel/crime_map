@@ -92,7 +92,11 @@
 
         </div>
     </div>
-
+    <div ng-repeat="tweet in tweets.statuses">
+      {{tweet.text}}
+      <a href ="http://twitter.com/statuses/{{tweet.id_str}}">Click</a>
+      <hr>
+    </div>
   </main>
 </div>
 <script src = 'scripts/multi-select.js'></script>
