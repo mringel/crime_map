@@ -9,10 +9,11 @@
   "author": "Dustin Noyes <dustin.noyes@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "angularjs-datepicker": "^0.2.16",
+    "angular-animate": "^1.4.8",
     "body-parser": "^1.14.1",
     "dotenv": "^1.2.0",
     "express": "^4.13.3",
+    "leaflet-transitionedicon": "^0.2.1",
     "mongoose": "^4.3.1",
     "request": "^2.67.0",
     "twitter": "^1.2.5",

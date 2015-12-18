@@ -7,9 +7,6 @@ module.exports = function(app) {
     $scope.crimeTypes = [];
     //crime types selected from dropdown
     $scope.selectedTypes = [];
-    $scope.startDate = new Date('January 1, 1970 00:00:00');;
-    $scope.endDate = new Date();
-
 
         //GETS ALL CRIMES IN DB
         $scope.getAll = function() {
@@ -125,6 +122,34 @@ module.exports = function(app) {
                 }
               };
 
+    //BEGIN DATE RENDERING
+    $scope.startDate = new Date();
+    $scope.endDate = new Date();
+
+    $scope.minDate = new Date(
+        $scope.startDate.getFullYear(),
+        $scope.startDate.getMonth(),
+        $scope.startDate.getDate()+1);
+
+    $scope.maxDate = new Date();
+
+    function daysInMonth(month,year) {
+      return new Date(today.getFullYear(), today.getMonth()+1, 0);
+    };
+
+    $scope.renderEnd = function(){
+      $scope.minDate = new Date(
+        $scope.startDate.getFullYear(),
+        $scope.startDate.getMonth(),
+        $scope.startDate.getDate()+1
+      );
+      $scope.maxDate = new Date(
+        $scope.startDate.getFullYear(),
+        $scope.startDate.getMonth(),
+        $scope.startDate.getDate()+daysInMonth($scope.startDate.getMonth(),$scope.startDate.getFullYear())
+      );
+    }
+    //END DATE RENDERING
 
               angular.extend($scope, {
                 seattle: {
