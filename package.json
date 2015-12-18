@@ -16,7 +16,8 @@
     "mongoose": "^4.3.1",
     "request": "^2.67.0",
     "twitter": "^1.2.5",
-    "twitter-js-client": "0.0.5"
+    "twitter-js-client": "0.0.5",
+    "moment": "~2.10.6"
   },
   "devDependencies": {
     "angular": "^1.4.8",
