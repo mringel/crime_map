@@ -7,6 +7,8 @@ module.exports = function(app) {
     $scope.crimeTypes = [];
     //crime types selected from dropdown
     $scope.selectedTypes = [];
+    // layers that are currently on the map
+    $scope.mapLayers = [];
     $scope.startDate = new Date('January 1, 1970 00:00:00');;
     $scope.endDate = new Date();
 
@@ -44,14 +46,22 @@ module.exports = function(app) {
               .then(function(res){
                 leafletData.getMap().then(function(map) {
                   L.Icon.Default.imagePath = './images/leaflet';
-                  L.geoJson(res.data, {
+                  $scope.mapLayers.push(L.geoJson(res.data, {
                   onEachFeature: onEachFeature
-                  }).addTo(map);
+                }).addTo(map));
                 });
               });
             }
           });
           $scope.selectedTypes.length=0;
+        };
+
+        $scope.clearMap = function() {
+          leafletData.getMap().then(function(map) {
+            for (var i = 0; i < $scope.mapLayers.length; i++) {
+              map.removeLayer($scope.mapLayers[i]);
+            }
+          });
         };
 
         //POPULATES DROPDOWN WITH INDEXED CRIME TYPES
