@@ -46,16 +46,7 @@ module.exports = function(app) {
         //USES SELECTED VALUES FROM DROPDOWN TO FETCH MATCHING CRIMES AND MAP
         $scope.mapSelected = function(){
 
-  var LeafIcon = L.Icon.extend({
-      options: {
-        shadowUrl: 'images/leaflet/DUI.png',
-        iconSize:     [38, 95],
-        shadowSize:   [50, 64],
-        iconAnchor:   [22, 94],
-        shadowAnchor: [4, 62],
-        popupAnchor:  [-3, -76]
-      }
-    });
+          alert($scope.startDate);
           $scope.clearMap();
           angular.forEach($scope.selectedTypes, function( value, key ) {
             for(var x=0; x<$scope.selectedTypes.length; x++){
