@@ -1,6 +1,6 @@
 {
   "name": "seattle_crime_map",
-  "version": "0.1.0",
+  "version": "0.12.7",
   "description": "",
   "main": "index.js",
   "scripts": {
