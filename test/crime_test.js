@@ -56,6 +56,7 @@ describe('crime routes', function() {
               .end(function(err, res) {
                 expect(err).to.eql(null);
                 expect(Array.isArray(res.body)).to.eql(true);
+                expect(res.body[0].properties.summarized_offense_description).to.eql('testcrime');
                 done();
               });
             });
