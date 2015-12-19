@@ -4,5 +4,14 @@
 }
 
 .leaflet-popup-content p {
-font-size: 1.333em
+font-size: 1.333em;
+}
+
+html, body, .full-height {
+  height: 100%;
+}
+
+#tweetbox {
+  overflow: auto;
+  height: 28%;
 }
