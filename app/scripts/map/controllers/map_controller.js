@@ -112,7 +112,7 @@ module.exports = function(app) {
 
         // Get tweets from same date as crime and within small geographic radius
         $scope.getTweets = function(lat, long, startDate, endDate) {
-          $http.get('/api/tweets/' + lat + ',' + long + '/' + startDate '/' + endDate)
+          $http.get('/api/tweets/' + lat + ',' + long + '/' + startDate + '/' + endDate)
           .then(function(res) {
             $scope.tweets = res.data;
           }, function(err) {
