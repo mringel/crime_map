@@ -47,8 +47,6 @@ module.exports = function(app) {
 
         //USES SELECTED VALUES FROM DROPDOWN TO FETCH MATCHING CRIMES AND MAP
         $scope.mapSelected = function(){
-
-          alert($scope.startDate);
           $scope.clearMap();
           angular.forEach($scope.selectedTypes, function( value, key ) {
             for(var x=0; x<$scope.selectedTypes.length; x++){
