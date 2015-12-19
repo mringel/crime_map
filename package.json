@@ -37,6 +37,7 @@
     "mongoose-unique-validator": "^0.6.2",
     "phantomjs": "^1.9.19",
     "twitter-node-client": "0.0.6",
-    "webpack-stream": "^3.0.1"
+    "webpack-stream": "^3.0.1",
+    "angular-mocks": "~1.4.8"
   }
 }

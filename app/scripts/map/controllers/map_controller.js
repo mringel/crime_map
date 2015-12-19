@@ -1,6 +1,6 @@
 module.exports = function(app) {
   app.controller("MapController", [ '$scope', '$http', 'leafletData', '$compile', function($scope, $http, leafletData, $compile) {
-
+    var moment = require('moment');
     //all crimes
     $scope.crimes = [];
     //types of crimes in db
@@ -75,15 +75,20 @@ module.exports = function(app) {
           $compile(args.leafletEvent.popup._contentNode)(newScope);
         });
 
-        $scope.popupClicker= function(lat, long, time) {
+        $scope.popupClicker= function(lat, long, date) {
           // console.log('The lat/long of this feature is: ', lat, long +
           //   '\nCrime occured or began at: ', time);
-          $scope.getTweets(lat, long, time);
-          console.log(time);
+          var startDate = moment(date, "YYYYMMDD").format('YYYY-MM-DD');
+          var endDate = moment(startDate).add(1, 'd').format('YYYY-MM-DD');
+          $scope.getTweets(lat, long, startDate, endDate);
+          console.log(startDate);
+          console.log(endDate);
         };
 
-        $scope.getTweets = function(lat, long, date) {
-          $http.get('/api/tweets/' + lat + ',' + long + '/1')
+        // Get tweets from same date as crime and within small geographic radius
+
+        $scope.getTweets = function(lat, long, startDate, endDate) {
+          $http.get('/api/tweets/' + lat + ',' + long + '/' + startDate '/' + endDate)
           .then(function(res) {
             $scope.tweets = res.data;
           }, function(err) {
@@ -94,9 +99,9 @@ module.exports = function(app) {
         // Called on each feature when plotted to attach popup
 
         function onEachFeature(feature, layer) {
-          var time = feature.properties.occurred_date_or_date_range_start.split('-');
-          yearMonthDay = time.slice(0,2).join('');
-          yearMonthDay += (time[2].split('T')[0]);
+          var date = feature.properties.occurred_date_or_date_range_start.split('-');
+          yearMonthDay = date.slice(0,2).join('');
+          yearMonthDay += (date[2].split('T')[0]);
           layer.bindPopup('offense type: ' + feature.properties.offense_type + '\n' +
             'occurred_date_or_date_range_start: ' + feature.properties.occurred_date_or_date_range_start +
             '<button class="pure-button" data-ng-click="popupClicker('+feature.properties.latitude+','+feature.properties.longitude+', '+yearMonthDay+')">Nearby Tweets</button>' );
