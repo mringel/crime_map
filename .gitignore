@@ -3,3 +3,4 @@ build
 .env
 crime_db
 db
+test/**/test_bundle.js

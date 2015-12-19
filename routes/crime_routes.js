@@ -33,8 +33,10 @@ crimeRouter.get('/crimes', function(req, res) {
   });
 });
 
-crimeRouter.get('/tweets/:geocode/:date', function(req, res) {
-  client.get('search/tweets.json?q=&geocode=' + req.params.geocode + ',1km&result_type=recent', params, function(error, tweets, response){
+crimeRouter.get('/tweets/:geocode/:startdate/:enddate', function(req, res) {
+  client.get('search/tweets.json?q=&geocode='
+    + req.params.geocode
+    + ',.5km&result_type=recent', params, function(error, tweets, response){
     if(error){
       console.log(error);
     }
@@ -58,7 +60,6 @@ crimeRouter.get('/internal/crimetypes/:crimeType/:start/:end', function(req, res
     'properties.occurred_date_or_date_range_start': {'$gte':req.params.start},
     'properties.occurred_date_range_end':{'$lte':req.params.end}},
   function(err, data) {
-    console.log(data);
     if (err) return handleError(err, res);
     res.json(data);
   });
