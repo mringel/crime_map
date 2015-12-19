@@ -1,12 +1,9 @@
 module.exports = function(app) {
   app.controller("MapController", [ '$scope', '$http', 'leafletData', '$compile', function($scope, $http, leafletData, $compile) {
-<<<<<<< HEAD
+
     var moment = require('moment');
-    //all crimes
-=======
 
     //all crimes (deprecated)
->>>>>>> 699878aee2117fe501860eb53e2acc7808fbb3ec
     $scope.crimes = [];
     //types of crimes in db
     $scope.crimeTypes = [];
@@ -105,23 +102,15 @@ module.exports = function(app) {
           $compile(args.leafletEvent.popup._contentNode)(newScope);
         });
 
-<<<<<<< HEAD
-        $scope.popupClicker= function(lat, long, date) {
-=======
         // function that is called when button in popup is clicked
-        $scope.popupClicker= function(lat, long, time) {
->>>>>>> 699878aee2117fe501860eb53e2acc7808fbb3ec
-          // console.log('The lat/long of this feature is: ', lat, long +
-          //   '\nCrime occured or began at: ', time);
+        $scope.popupClicker= function(lat, long, date) {
+
           var startDate = moment(date, "YYYYMMDD").format('YYYY-MM-DD');
           var endDate = moment(startDate).add(1, 'd').format('YYYY-MM-DD');
           $scope.getTweets(lat, long, startDate, endDate);
-          console.log(startDate);
-          console.log(endDate);
         };
 
         // Get tweets from same date as crime and within small geographic radius
-
         $scope.getTweets = function(lat, long, startDate, endDate) {
           $http.get('/api/tweets/' + lat + ',' + long + '/' + startDate '/' + endDate)
           .then(function(res) {
@@ -133,21 +122,10 @@ module.exports = function(app) {
 
         // Called on each feature when plotted to attach popup
         function onEachFeature(feature, layer) {
-<<<<<<< HEAD
+
           var date = feature.properties.occurred_date_or_date_range_start.split('-');
           yearMonthDay = date.slice(0,2).join('');
           yearMonthDay += (date[2].split('T')[0]);
-          layer.bindPopup('offense type: ' + feature.properties.offense_type + '\n' +
-            'occurred_date_or_date_range_start: ' + feature.properties.occurred_date_or_date_range_start +
-            '<button class="pure-button" data-ng-click="popupClicker('+feature.properties.latitude+','+feature.properties.longitude+', '+yearMonthDay+')">Nearby Tweets</button>' );
-=======
-          var time = feature.properties.occurred_date_or_date_range_start.split('-');
-          yearMonthDay = time.slice(0,2).join('');
-          yearMonthDay += (time[2].split('T')[0]);
-
-          // layer.bindPopup('offense type: ' + feature.properties.offense_type + '\n' +
-          //   'occurred_date_or_date_range_start: ' + feature.properties.occurred_date_or_date_range_start +
-          //   '<button class="pure-button" data-ng-click="popupClicker('+feature.properties.latitude+','+feature.properties.longitude+', '+yearMonthDay+')">Nearby Tweets</button>' );
 
           layer.bindPopup('<div><p> <b>offense type:</b> '
             + feature.properties.offense_type + '<br>' + '<b>occurred on:</b> '
@@ -155,8 +133,6 @@ module.exports = function(app) {
             + '<button class="pure-button" data-ng-click="popupClicker('
             + feature.properties.latitude + ',' + feature.properties.longitude
             + ', ' + yearMonthDay + ')">Nearby Tweets</button></div>' );
-
->>>>>>> 699878aee2117fe501860eb53e2acc7808fbb3ec
         }
 
         var tilesDict = {
