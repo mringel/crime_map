@@ -15,12 +15,11 @@
     "dotenv": "^1.2.0",
     "express": "^4.13.3",
     "leaflet-transitionedicon": "^0.2.1",
-    "moment": "^2.10.6",
+    "moment": "~2.10.6",
     "mongoose": "^4.3.1",
     "request": "^2.67.0",
     "twitter": "^1.2.5",
-    "twitter-js-client": "0.0.5",
-    "moment": "~2.10.6"
+    "twitter-js-client": "0.0.5"
   },
   "devDependencies": {
     "angular": "^1.4.8",
@@ -37,6 +36,7 @@
     "karma": "^0.13.15",
     "karma-jasmine": "^0.3.6",
     "karma-phantomjs-launcher": "^0.2.1",
+    "mocha": "^2.3.4",
     "mongoose-unique-validator": "^0.6.2",
     "phantomjs": "^1.9.19",
     "twitter-node-client": "0.0.6",
