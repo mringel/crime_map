@@ -61,9 +61,6 @@ module.exports = function(app) {
               .then(function(res){
                 leafletData.getMap().then(function(map) {
                   L.Icon.Default.imagePath = './images/leaflet';
-                  $scope.mapLayers.push(L.geoJson(res.data, {
-                  onEachFeature: onEachFeature,
-                }).addTo(map));
                   var newLayer = L.geoJson(res.data, {
                     onEachFeature: onEachFeature
                   });
