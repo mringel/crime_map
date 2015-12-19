@@ -3,9 +3,11 @@ require('angular/angular');
 var angular = window.angular;
 require('./directives/angular-leaflet-directive');
 require('./multi-select');
-require('angularjs-datepicker');
 
-var crimeMapApp = angular.module('CrimeMapApp', ['leaflet-directive', 'isteven-multi-select', '720kb.datepicker']);
+
+
+
+var crimeMapApp = angular.module('CrimeMapApp', ['leaflet-directive', 'isteven-multi-select', require('angular-aria'), require('angular-material') ]);
 // require('./services/services')(crimeMapApp);
 // require('./directives/directives')(crimeMapApp);
 require('./map/map')(crimeMapApp);

@@ -1,17 +1,34 @@
 module.exports = function(app) {
   app.controller("MapController", [ '$scope', '$http', 'leafletData', '$compile', function($scope, $http, leafletData, $compile) {
+<<<<<<< HEAD
     var moment = require('moment');
     //all crimes
+=======
+
+    //all crimes (deprecated)
+>>>>>>> 699878aee2117fe501860eb53e2acc7808fbb3ec
     $scope.crimes = [];
     //types of crimes in db
     $scope.crimeTypes = [];
     //crime types selected from dropdown
     $scope.selectedTypes = [];
-    $scope.startDate = new Date('January 1, 1970 00:00:00');;
+
+    // layers that are currently on the map (deprecated by $scope.layerGroup)
+    $scope.mapLayers = [];
+
+    $scope.startDate;
     $scope.endDate = new Date();
     $scope.tweets = [];
 
         //GETS ALL CRIMES IN DB
+    // initialize a leaflet layergroup and add it to the map for better layer control
+    $scope.layerGroup = null;
+    leafletData.getMap().then(function(map) {
+      $scope.layerGroup = L.layerGroup().addTo(map);
+    });
+
+
+        //GETS ALL CRIMES IN DB (deprecated, not used in current master)
         $scope.getAll = function() {
           $http.get('/api/crimes')
           .then(function(res) {
@@ -21,10 +38,10 @@ module.exports = function(app) {
           });
         };
 
-        //ADDS ALL CRIMES IN DB TO MAP
+        //ADDS ALL CRIMES IN DB TO MAP (deprecated)
         $scope.addAll = function() {
           leafletData.getMap().then(function(map) {
-            L.Icon.Default.imagePath = 'http://api.tiles.mapbox.com/mapbox.js/v1.0.0beta0.0/images';
+            L.Icon.Default.imagePath = './images/leaflet';
             L.geoJson($scope.crimes, {
               onEachFeature: onEachFeature
             }).addTo(map);
@@ -33,7 +50,10 @@ module.exports = function(app) {
 
         //USES SELECTED VALUES FROM DROPDOWN TO FETCH MATCHING CRIMES AND MAP
         $scope.mapSelected = function(){
-          angular.forEach( $scope.selectedTypes, function( value, key ) {
+
+          alert($scope.startDate);
+          $scope.clearMap();
+          angular.forEach($scope.selectedTypes, function( value, key ) {
             for(var x=0; x<$scope.selectedTypes.length; x++){
               $http.get('/api/internal/crimetypes/'
                 + $scope.selectedTypes[x].name
@@ -43,15 +63,25 @@ module.exports = function(app) {
                 + $scope.endDate)
               .then(function(res){
                 leafletData.getMap().then(function(map) {
-                  L.Icon.Default.imagePath = 'http://api.tiles.mapbox.com/mapbox.js/v1.0.0beta0.0/images';
-                  L.geoJson(res.data, {
-                  onEachFeature: onEachFeature
-                  }).addTo(map);
+                  L.Icon.Default.imagePath = './images/leaflet';
+                  $scope.mapLayers.push(L.geoJson(res.data, {
+                  onEachFeature: onEachFeature,
+                }).addTo(map));
+                  var newLayer = L.geoJson(res.data, {
+                    onEachFeature: onEachFeature
+                  });
+                  $scope.layerGroup.addLayer(newLayer);
+                  map.fitBounds(newLayer);
+
                 });
               });
             }
           });
-          $scope.selectedTypes.length=0;
+        };
+
+        // removes layers that have been plotted on the map
+        $scope.clearMap = function() {
+          $scope.layerGroup.clearLayers();
         };
 
         //POPULATES DROPDOWN WITH INDEXED CRIME TYPES
@@ -67,7 +97,7 @@ module.exports = function(app) {
         };
         $scope.getTypes();
 
-
+        // get's code inserted into DOM by leaflet popup compiled into angular
         $scope.$on('leafletDirectiveMap.popupopen', function(event, args) {
           var feature = args.leafletEvent.popup.options.feature;
           var newScope = $scope.$new();
@@ -75,7 +105,12 @@ module.exports = function(app) {
           $compile(args.leafletEvent.popup._contentNode)(newScope);
         });
 
+<<<<<<< HEAD
         $scope.popupClicker= function(lat, long, date) {
+=======
+        // function that is called when button in popup is clicked
+        $scope.popupClicker= function(lat, long, time) {
+>>>>>>> 699878aee2117fe501860eb53e2acc7808fbb3ec
           // console.log('The lat/long of this feature is: ', lat, long +
           //   '\nCrime occured or began at: ', time);
           var startDate = moment(date, "YYYYMMDD").format('YYYY-MM-DD');
@@ -97,50 +132,97 @@ module.exports = function(app) {
         };
 
         // Called on each feature when plotted to attach popup
-
         function onEachFeature(feature, layer) {
+<<<<<<< HEAD
           var date = feature.properties.occurred_date_or_date_range_start.split('-');
           yearMonthDay = date.slice(0,2).join('');
           yearMonthDay += (date[2].split('T')[0]);
           layer.bindPopup('offense type: ' + feature.properties.offense_type + '\n' +
             'occurred_date_or_date_range_start: ' + feature.properties.occurred_date_or_date_range_start +
             '<button class="pure-button" data-ng-click="popupClicker('+feature.properties.latitude+','+feature.properties.longitude+', '+yearMonthDay+')">Nearby Tweets</button>' );
+=======
+          var time = feature.properties.occurred_date_or_date_range_start.split('-');
+          yearMonthDay = time.slice(0,2).join('');
+          yearMonthDay += (time[2].split('T')[0]);
+
+          // layer.bindPopup('offense type: ' + feature.properties.offense_type + '\n' +
+          //   'occurred_date_or_date_range_start: ' + feature.properties.occurred_date_or_date_range_start +
+          //   '<button class="pure-button" data-ng-click="popupClicker('+feature.properties.latitude+','+feature.properties.longitude+', '+yearMonthDay+')">Nearby Tweets</button>' );
+
+          layer.bindPopup('<div><p> <b>offense type:</b> '
+            + feature.properties.offense_type + '<br>' + '<b>occurred on:</b> '
+            + feature.properties.occurred_date_or_date_range_start + '<br></p>'
+            + '<button class="pure-button" data-ng-click="popupClicker('
+            + feature.properties.latitude + ',' + feature.properties.longitude
+            + ', ' + yearMonthDay + ')">Nearby Tweets</button></div>' );
+
+>>>>>>> 699878aee2117fe501860eb53e2acc7808fbb3ec
         }
 
         var tilesDict = {
           openstreetmap: {
-                url: "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                options: {
-                    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-                  }
-                },
-                opencyclemap: {
-                  url: "http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png",
-                  options: {
-                    attribution: 'All maps &copy; <a href="http://www.opencyclemap.org">OpenCycleMap</a>, map data &copy; <a href="http://www.openstreetmap.org">OpenStreetMap</a> (<a href="http://www.openstreetmap.org/copyright">ODbL</a>'
-                  }
-                },
+            url: "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+            options: {
+              attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }
+          },
+          opencyclemap: {
+            url: "http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png",
+            options: {
+              attribution: 'All maps &copy; <a href="http://www.opencyclemap.org">OpenCycleMap</a>, map data &copy; <a href="http://www.openstreetmap.org">OpenStreetMap</a> (<a href="http://www.openstreetmap.org/copyright">ODbL</a>'
+            }
+          },
 
-                mapbox_dark: {
-                  name: 'Mapbox Dark',
-                  url: 'https://api.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
-                  type: 'xyz',
-                  options: {
-                    apikey: 'pk.eyJ1IjoibXJpbmdlbCIsImEiOiIwYjM4MzFkY2E3ZTEyNzAwNGM4M2VjODZlODlkNWZhNiJ9.EJlJwl9IJoBptQV_EARdYA',
-                    mapid: 'mapbox.dark'
-                  }
-                },
-                mapbox_light: {
-                  name: 'Mapbox Light',
-                  url: 'http://api.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
-                  type: 'xyz',
-                  options: {
-                    apikey: 'pk.eyJ1IjoibXJpbmdlbCIsImEiOiIwYjM4MzFkY2E3ZTEyNzAwNGM4M2VjODZlODlkNWZhNiJ9.EJlJwl9IJoBptQV_EARdYA',
-                    mapid: 'mapbox.light'
-                  }
-                }
-              };
+          mapbox_dark: {
+            name: 'Mapbox Dark',
+            url: 'https://api.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
+            type: 'xyz',
+            options: {
+              apikey: 'pk.eyJ1IjoibXJpbmdlbCIsImEiOiIwYjM4MzFkY2E3ZTEyNzAwNGM4M2VjODZlODlkNWZhNiJ9.EJlJwl9IJoBptQV_EARdYA',
+              mapid: 'mapbox.dark',
+              attribution: '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+            }
+          },
+          mapbox_light: {
+            name: 'Mapbox Light',
+            url: 'http://api.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
+            type: 'xyz',
+            options: {
+              apikey: 'pk.eyJ1IjoibXJpbmdlbCIsImEiOiIwYjM4MzFkY2E3ZTEyNzAwNGM4M2VjODZlODlkNWZhNiJ9.EJlJwl9IJoBptQV_EARdYA',
+              mapid: 'mapbox.light',
+              attribution: '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+            }
+          }
+        };
 
+    //BEGIN DATE RENDERING
+    $scope.startDate = new Date();
+    $scope.endDate = new Date();
+
+    $scope.minDate = new Date(
+        $scope.startDate.getFullYear(),
+        $scope.startDate.getMonth(),
+        $scope.startDate.getDate()+1);
+
+    $scope.maxDate = new Date();
+
+    function daysInMonth(month,year) {
+      return new Date(year, month, 0).getDate();
+    }
+
+    $scope.renderEnd = function(){
+      $scope.minDate = new Date(
+        $scope.startDate.getFullYear(),
+        $scope.startDate.getMonth(),
+        $scope.startDate.getDate()+1
+      );
+      $scope.maxDate = new Date(
+        $scope.startDate.getFullYear(),
+        $scope.startDate.getMonth(),
+        $scope.startDate.getDate() + (daysInMonth($scope.startDate.getMonth()+1, $scope.startDate.getYear()) - $scope.startDate.getDate())
+      );
+    }
+    //END DATE RENDERING
 
               angular.extend($scope, {
                 seattle: {

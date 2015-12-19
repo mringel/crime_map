@@ -56,11 +56,11 @@ crimeRouter.get('/internal/crimetypes', function(req, res) {
 crimeRouter.get('/internal/crimetypes/:crimeType/:start/:end', function(req, res) {
 
   Crime.find({
+
     'properties.summarized_offense_description': req.params.crimeType,
     'properties.occurred_date_or_date_range_start': {'$gte':req.params.start},
     'properties.occurred_date_range_end':{'$lte':req.params.end}},
   function(err, data) {
-    console.log(data);
     if (err) return handleError(err, res);
     res.json(data);
   });

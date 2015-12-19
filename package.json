@@ -4,40 +4,50 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js",
+    "postinstall": "gulp"
   },
   "author": "Dustin Noyes <dustin.noyes@gmail.com>",
   "license": "ISC",
   "dependencies": {
-    "angularjs-datepicker": "^0.2.16",
+    "angular": "^1.4.8",
+    "angular-route": "^1.4.8",
+    "angular-animate": "^1.4.8",
+    "angular-aria": "^1.4.8",
     "body-parser": "^1.14.1",
     "dotenv": "^1.2.0",
     "express": "^4.13.3",
-    "mongoose": "^4.3.1",
-    "request": "^2.67.0",
-    "twitter": "^1.2.5",
-    "twitter-js-client": "0.0.5",
-    "moment": "~2.10.6"
-  },
-  "devDependencies": {
-    "angular": "^1.4.8",
-    "angular-route": "^1.4.8",
-    "chai": "^3.4.1",
-    "chai-http": "^1.0.0",
     "gulp": "^3.9.0",
     "gulp-minify-css": "^1.2.2",
     "gulp-mocha": "^2.2.0",
     "gulp-sass": "^2.1.1",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-watch": "^4.3.5",
+    "leaflet-transitionedicon": "^0.2.1",
+    "moment": "^2.10.6",
+    "mongoose": "^4.3.1",
+    "request": "^2.67.0",
+    "twitter": "^1.2.5",
+    "twitter-js-client": "0.0.5",
+    "twitter-node-client": "0.0.6",
+    "moment": "~2.10.6",
+    "webpack-stream": "^3.0.1"
+  },
+  "devDependencies": {
+    "chai": "^3.4.1",
+    "chai-http": "^1.0.0",
     "jasmine-core": "^2.4.1",
     "karma": "^0.13.15",
     "karma-jasmine": "^0.3.6",
     "karma-phantomjs-launcher": "^0.2.1",
     "mongoose-unique-validator": "^0.6.2",
+<<<<<<< HEAD
     "phantomjs": "^1.9.19",
     "twitter-node-client": "0.0.6",
     "webpack-stream": "^3.0.1",
     "angular-mocks": "~1.4.8"
+=======
+    "phantomjs": "^1.9.19"
+>>>>>>> 699878aee2117fe501860eb53e2acc7808fbb3ec
   }
 }

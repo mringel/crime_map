@@ -11,6 +11,11 @@ gulp.task('static:dev', function() {
   .pipe(gulp.dest('build/'));
 });
 
+gulp.task('images:dev', function() {
+  gulp.src('app/images/leaflet/*.png')
+  .pipe(gulp.dest('build/images/leaflet/'));
+});
+
 gulp.task('webpack:dev', function() {
   return gulp.src('app/js/entry.js')
   .pipe(webpack({
@@ -59,5 +64,5 @@ gulp.task('webpack:test', function() {
   .pipe(gulp.dest('test/client/'));
 });
 
-gulp.task('build:dev', ['webpack:dev', 'static:dev', 'styles:dev', 'scripts:dev']);
+gulp.task('build:dev', ['webpack:dev', 'static:dev', 'styles:dev', 'scripts:dev', 'images:dev']);
 gulp.task('default', ['build:dev']);

@@ -1,0 +1,15 @@
+$background: #ffbf80;
+
+@import url(https://fonts.googleapis.com/css?family=Lobster);
+
+.header {
+  border: none;
+}
+
+h1 {
+  font-family: 'Lobster', cursive;
+}
+
+body {
+  background-color: $background;
+}
