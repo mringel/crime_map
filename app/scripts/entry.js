@@ -3,6 +3,7 @@ require('angular/angular');
 var angular = window.angular;
 require('./directives/angular-leaflet-directive');
 require('./multi-select');
+require('angular-material');
 
 
 
