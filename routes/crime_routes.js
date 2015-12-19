@@ -33,8 +33,10 @@ crimeRouter.get('/crimes', function(req, res) {
   });
 });
 
-crimeRouter.get('/tweets/:geocode/:date', function(req, res) {
-  client.get('search/tweets.json?q=&geocode=' + req.params.geocode + ',1km&result_type=recent', params, function(error, tweets, response){
+crimeRouter.get('/tweets/:geocode/:startdate/:enddate', function(req, res) {
+  client.get('search/tweets.json?q=&geocode='
+    + req.params.geocode
+    + ',.5km&result_type=recent', params, function(error, tweets, response){
     if(error){
       console.log(error);
     }

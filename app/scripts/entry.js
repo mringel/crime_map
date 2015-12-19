@@ -8,7 +8,6 @@ require('angular-material');
 
 
 
-
 var crimeMapApp = angular.module('CrimeMapApp', ['leaflet-directive', 'isteven-multi-select', require('angular-aria'), require('angular-material') ]);
 // require('./services/services')(crimeMapApp);
 // require('./directives/directives')(crimeMapApp);
