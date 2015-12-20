@@ -12,6 +12,10 @@ $background: #ffbf80;
   margin-top: 10%;
 }
 
+.content {
+  padding:1em;
+}
+
 .controls {
   font-family: sans-serif;
   letter-spacing: 1px;
@@ -28,15 +32,19 @@ $background: #ffbf80;
 .control-tag {
   margin-top:0;
   font-weight:300;
+  font-size:0.75em;
+  font-family:sans-serif;
+}
+
+.control-label {
+  margin-top:0;
+  font-weight:300;
+  font-size:1.25em;
   font-family:sans-serif;
 }
 
 .inline{
   display:inline;
-}
-
-.scale{
-  width:50%;
 }
 
 .override {
@@ -75,8 +83,8 @@ body {
 .group { zoom:1; /* For IE 6/7 */ }
 
 /*  GRID OF THREE  */
-.span_2_of_2 { width: 66.13%; }
-.span_1_of_2 { width: 32.26%;  background-color:#FFF;}
+.span_2_of_2 { width: 70%; }
+.span_1_of_2 { width: 28%;  background-color:#FFF;}
 
 /*  GO FULL WIDTH BELOW 480 PIXELS */
 @media only screen and (max-width: 480px) {
