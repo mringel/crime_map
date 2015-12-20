@@ -1,4 +1,5 @@
 var gulp = require('gulp');
+var mocha = require('gulp-mocha');
 var minifyCss = require('gulp-minify-css');
 var gulpWatch = require('gulp-watch');
 var sass = require('gulp-sass');
