@@ -10518,14 +10518,13 @@ md-datepicker {
   background: none; }
 
 .md-datepicker-input {
-  font-size: 14px;
+  font-size: 10px;
   box-sizing: border-box;
-  border: none;
+  border: thin solid white;
   box-shadow: none;
   outline: none;
   background: transparent;
-  min-width: 120px;
-  max-width: 328px; }
+  width:75%}
   .md-datepicker-input::-ms-clear {
     display: none; }
 

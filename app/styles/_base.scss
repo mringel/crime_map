@@ -17,6 +17,24 @@ $background: #ffbf80;
   letter-spacing: 1px;
 }
 
+.control-group {
+  padding:1%;
+  margin-bottom:1%;
+  border: thin solid #3D4F5D;
+  color:#3D4F5D;
+  background-color:$background;
+}
+
+.control-tag {
+  margin-top:0;
+  font-weight:300;
+  font-family:sans-serif;
+}
+
+.inline{
+  display:inline;
+}
+
 .override {
   background-color:none;
 }
@@ -27,7 +45,7 @@ h1 {
 }
 
 body {
-  background-color: $background;
+  // background-color: $background;
 }
 
 
