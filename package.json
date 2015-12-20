@@ -35,6 +35,7 @@
     "webpack-stream": "^3.0.1"
   },
   "devDependencies": {
+    "angular-mocks": "^1.4.8",
     "chai": "^3.4.1",
     "chai-http": "^1.0.0",
     "jasmine-core": "^2.4.1",
@@ -45,7 +46,6 @@
     "mongoose-unique-validator": "^0.6.2",
     "phantomjs": "^1.9.19",
     "twitter-node-client": "0.0.6",
-    "webpack-stream": "^3.0.1",
-    "angular-mocks": "~1.4.8"
+    "webpack-stream": "^3.0.1"
   }
 }

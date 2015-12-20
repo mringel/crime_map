@@ -36,7 +36,7 @@ crimeRouter.get('/crimes', function(req, res) {
 crimeRouter.get('/tweets/:geocode/:startdate/:enddate', function(req, res) {
   client.get('search/tweets.json?q=&geocode='
     + req.params.geocode
-    + ',.5km&result_type=recent', params, function(error, tweets, response){
+    + ',.5km&since:' + req.params.startdate + '&until:' + req.params.enddate, params, function(error, tweets, response){
     if(error){
       console.log(error);
     }

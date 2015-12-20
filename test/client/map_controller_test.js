@@ -35,28 +35,31 @@ describe('map controller', function() {
     });
 
     it('should add array to $scope.crimes when getAll() is called', function() {
+      $httpBackend.expectGET('/api/internal/crimetypes').respond(200, '');
       $httpBackend.expectGET('/api/crimes').respond(200, [{crime: 'horrible crime'}]);
       $scope.getAll();
       $httpBackend.flush();
+
       expect($scope.crimes[0].crime).toBe('horrible crime');
     });
 
-    it('should add array to $scope.tweets when getAll() is called', function() {
+    it('should add array to $scope.tweets when getTweets() is called', function() {
+      $httpBackend.expectGET('/api/internal/crimetypes').respond(200, '');
       $httpBackend.expectGET('/api/tweets/lat,long/startdate/enddate').respond(200, [{tweet: 'relevant tweet'}]);
       $scope.getTweets('lat', 'long', 'startdate', 'enddate');
       $httpBackend.flush();
       expect($scope.tweets[0].tweet).toBe('relevant tweet');
     });
 
-    it('should map selected crimes with mapSelected()', function() {
-      // test mapSelected();
-    });
-
     it('should push crime types from /api/internal/crimetypes to $scope.crimeTypes with getTypes()', function() {
-      // test getTypes();
+      $httpBackend.expectGET('/api/internal/crimetypes').respond(200, '');
+      $httpBackend.expectGET('/api/internal/crimetypes').respond(200, ['burglary', 'robbery', 'shoplifting']);
+      $scope.getTypes();
+      $httpBackend.flush();
+      expect($scope.crimeTypes).toEqual([{name: 'burglary'}, {name: 'robbery'}, {name: 'shoplifting'}]);
     });
 
-    // Then, just add tests for popupClicker() and getTweets()
+
 
   });
 

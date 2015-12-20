@@ -17,6 +17,7 @@ module.exports = function(app) {
     $scope.startDate;
     $scope.endDate = new Date();
     $scope.tweets = [];
+    $scope.notFounds = [];
 
     // initialize a leaflet layergroup and add it to the map for better layer control
     $scope.layerGroup = null;
@@ -73,7 +74,8 @@ module.exports = function(app) {
                       map.fitBounds(newLayer);
 
                     });
-                }  else {alert('No matching items found in database.')}
+                }  else {$scope.notFounds.push(res.config.url.split("/")[4].toLowerCase());
+                  }
               });
             }
         //   }
@@ -83,6 +85,7 @@ module.exports = function(app) {
         // removes layers that have been plotted on the map
         $scope.clearMap = function() {
           $scope.layerGroup.clearLayers();
+          $scope.notFounds = [];
         };
 
         //POPULATES DROPDOWN WITH INDEXED CRIME TYPES

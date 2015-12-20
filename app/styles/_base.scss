@@ -5,7 +5,55 @@ $background: #ffbf80;
 .header {
   border: none;
   text-align: center;
-  font-size: 2em;
+  margin-top:3%;
+}
+
+.secondary {
+  margin-top: 10%;
+}
+
+.content {
+  padding:1em;
+}
+
+.controls {
+  font-family: sans-serif;
+  letter-spacing: 1px;
+}
+
+.control-group {
+  padding:1%;
+  margin-bottom:1%;
+  border: thin solid #3D4F5D;
+  color:#3D4F5D;
+  background-color:$background;
+}
+
+.warning {
+  color:red;
+  font-size:0.5em;
+}
+
+.control-tag {
+  margin-top:0;
+  font-weight:300;
+  font-size:0.75em;
+  font-family:sans-serif;
+}
+
+.control-label {
+  margin-top:0;
+  font-weight:300;
+  font-size:1.25em;
+  font-family:sans-serif;
+}
+
+.inline{
+  display:inline;
+}
+
+.override {
+  background-color:none;
 }
 
 h1 {
@@ -14,5 +62,37 @@ h1 {
 }
 
 body {
-  background-color: $background;
+  // background-color: $background;
+}
+
+
+/*  SECTIONS  */
+.section {
+  clear: both;
+  padding: 0px;
+  margin: 0px;
+}
+
+/*  COLUMN SETUP  */
+.col {
+  display: block;
+  float:left;
+  margin: 1% 0 1% 1.6%;
+}
+.col:first-child { margin-left: 0; }
+
+/*  GROUPING  */
+.group:before,
+.group:after { content:""; display:table; }
+.group:after { clear:both;}
+.group { zoom:1; /* For IE 6/7 */ }
+
+/*  GRID OF THREE  */
+.span_2_of_2 { width: 70%; }
+.span_1_of_2 { width: 28%;  background-color:#FFF;}
+
+/*  GO FULL WIDTH BELOW 480 PIXELS */
+@media only screen and (max-width: 480px) {
+  .col {  margin: 1% 0 1% 0%; }
+  .span_2_of_2, .span_1_of_2 { width: 100%; }
 }
