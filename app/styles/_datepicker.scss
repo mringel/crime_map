@@ -18,7 +18,7 @@
 html, body {
   height: 100%;
   color: rgba(0, 0, 0, 0.87);
-  background: white;
+
   position: relative; }
 
 body {
@@ -33,7 +33,7 @@ body {
 
 button.md-no-style {
   font-weight: normal;
-  background-color: inherit;
+  background-color: #ffbf80;
   text-align: left;
   border: none;
   padding: 0;
@@ -9482,7 +9482,8 @@ md-autocomplete {
     md-autocomplete input {
       border: 1px solid #fff; }
     md-autocomplete li:focus {
-      color: #fff; } }
+      // color: #fff;
+    } }
 
 .md-virtual-repeat-container.md-autocomplete-suggestions-container {
   position: absolute;
@@ -11034,7 +11035,7 @@ md-grid-list {
           -ms-flex-align: center;
               align-items: center;
       height: 48px;
-      color: #fff;
+      //color: #fff;
       background: rgba(0, 0, 0, 0.18);
       overflow: hidden;
       position: absolute;
@@ -11059,9 +11060,9 @@ md-grid-list {
 
 @media screen and (-ms-high-contrast: active) {
   md-grid-tile {
-    border: 1px solid #fff; }
+    border: 1px solid ; }
   md-grid-tile-footer {
-    border-top: 1px solid #fff; } }
+    border-top: 1px solid ; } }
 
 md-icon {
   margin: auto;
@@ -11657,7 +11658,7 @@ md-input-container.md-icon-right {
 
 @media screen and (-ms-high-contrast: active) {
   md-input-container.md-default-theme > md-icon {
-    fill: #fff; } }
+     } }
 
 md-list {
   display: block;
@@ -12539,7 +12540,8 @@ md-radio-group.md-focused .md-checked .md-container:before {
 
 @media screen and (-ms-high-contrast: active) {
   md-radio-button.md-default-theme .md-on {
-    background-color: #fff; } }
+    // background-color: #fff;
+  } }
 
 md-progress-linear {
   display: block;
@@ -12997,7 +12999,7 @@ md-optgroup {
   .md-select-backdrop {
     background-color: transparent; }
   md-select-menu {
-    border: 1px solid #fff; } }
+    border: 1px solid;} }
 
 @-webkit-keyframes sliderFocusThumb {
   0% {
@@ -13214,7 +13216,7 @@ md-slider {
 
 @media screen and (-ms-high-contrast: active) {
   md-slider.md-default-theme .md-track {
-    border-bottom: 1px solid #fff; } }
+    border-bottom: 1px solid;  } }
 
 md-sidenav {
   box-sizing: border-box;

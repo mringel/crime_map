@@ -38,6 +38,7 @@ describe('map controller', function() {
       $httpBackend.expectGET('/api/crimes').respond(200, [{crime: 'horrible crime'}]);
       $scope.getAll();
       $httpBackend.flush();
+
       expect($scope.crimes[0].crime).toBe('horrible crime');
     });
 

@@ -10,8 +10,71 @@
 
   <body data-ng-app="CrimeMapApp">
     <main data-ng-controller="MapController" class="full-height">
+      <div id="layout" class="pure-g">
+        <div class="sidebar pure-u-1 pure-u-md-1-4">
+          <div class="header">
+              <h1 class="brand-title">Seattle Crime Map</h1>
+              <h2 class="brand-tagline">social media search tool</h2>
 
-      <div class="pure-g full-height">
+              <nav class="nav">
+                  <ul class="nav-list">
+                      <li class="nav-item">
+                        <a href="" class="pure-button">how to</a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="" class="pure-button">about</a>
+                      </li>
+                      <li class="nav-item">
+                        <a href="" class="pure-button">account</a>
+                      </li>
+                      <h2 class="brand-tagline">change map theme</h2>
+                      <li class="nav-item">
+                        <a data-ng-click="clearMap()" class="pure-button">Clear Map</a>
+                      </li>
+                      <li class="nav-item">
+                        <a data-ng-click="changeTiles('openstreetmap')" class="pure-button">OpenStreetMaps</a>
+                      </li>
+                      <li class="nav-item">
+                        <a data-ng-click="changeTiles('mapbox_dark')" class="pure-button">MapBox Dark</a>
+                      </li>
+                      <li class="nav-item">
+                        <a data-ng-click="changeTiles('mapbox_light')" class="pure-button">MapBox Light</a></li>
+                      </li>
+                  </ul>
+              </nav>
+          </div>
+        </div>
+
+        <div class="content pure-u-1 pure-u-md-3-4">
+          <div class="post-description">
+            <div class="post-images pure-g">
+              <div class="section group controls">
+                <div class="col span_1_of_2">
+                  <div
+                    isteven-multi-select
+                    input-model="crimeTypes"
+                    output-model="selectedTypes"
+                    button-label="icon name"
+                    item-label="icon name maker"
+                    tick-property="ticked">
+                  </div>
+                  Begin Date Range
+                  <md-datepicker ng-model="startDate" ng-change='renderEnd()' md-placeholder="Enter start date"></md-datepicker>
+
+                  End Date Range
+                  <md-datepicker ng-model="endDate" md-placeholder="Enter end date" md-min-date="minDate" md-max-date="maxDate" ></md-datepicker>
+                </div>
+                <div class="col span_2_of_2">
+                  <leaflet geojson="crimes" lf-center="seattle" tiles="tiles" defaults="defaults" height="600px" width="600px" class='pure-img-responsive'></leaflet>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+
+      <!-- <div class="pure-g full-height">
         <div class="pure-u-1-3 full-height">
 
           <div id="menu">
@@ -92,11 +155,10 @@
         <div class="pure-u-2-3 full-height">
           <leaflet geojson="crimes" lf-center="seattle" tiles="tiles" defaults="defaults" height="100%" width="100%"></leaflet>
         </div>
-      </div>
+      </div> -->
     </main>
 
     <script src = 'scripts/multi-select.js'></script>
-    <script src = 'scripts/pure-ui.js'></script>
     <script src = 'scripts/ico-moon.js'></script>
     <script src = 'bundle.js'></script>
   </body>

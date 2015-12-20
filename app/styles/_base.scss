@@ -5,7 +5,20 @@ $background: #ffbf80;
 .header {
   border: none;
   text-align: center;
-  font-size: 2em;
+  margin-top:3%;
+}
+
+.secondary {
+  margin-top: 10%;
+}
+
+.controls {
+  font-family: sans-serif;
+  letter-spacing: 1px;
+}
+
+.override {
+  background-color:none;
 }
 
 h1 {
@@ -15,4 +28,36 @@ h1 {
 
 body {
   background-color: $background;
+}
+
+
+/*  SECTIONS  */
+.section {
+  clear: both;
+  padding: 0px;
+  margin: 0px;
+}
+
+/*  COLUMN SETUP  */
+.col {
+  display: block;
+  float:left;
+  margin: 1% 0 1% 1.6%;
+}
+.col:first-child { margin-left: 0; }
+
+/*  GROUPING  */
+.group:before,
+.group:after { content:""; display:table; }
+.group:after { clear:both;}
+.group { zoom:1; /* For IE 6/7 */ }
+
+/*  GRID OF THREE  */
+.span_2_of_2 { width: 66.13%; }
+.span_1_of_2 { width: 32.26%;  background-color:#FFF;}
+
+/*  GO FULL WIDTH BELOW 480 PIXELS */
+@media only screen and (max-width: 480px) {
+  .col {  margin: 1% 0 1% 0%; }
+  .span_2_of_2, .span_1_of_2 { width: 100%; }
 }
