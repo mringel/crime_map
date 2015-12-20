@@ -2,6 +2,7 @@ module.exports = function(app) {
   app.controller("MapController", [ '$scope', '$http', 'leafletData', '$compile', function($scope, $http, leafletData, $compile) {
 
     var moment = require('moment');
+    var iconList = require('../icon_list');
 
     //all crimes (deprecated)
     $scope.crimes = [];
@@ -17,11 +18,11 @@ module.exports = function(app) {
     $scope.endDate = new Date();
     $scope.tweets = [];
 
-        //GETS ALL CRIMES IN DB
     // initialize a leaflet layergroup and add it to the map for better layer control
     $scope.layerGroup = null;
     leafletData.getMap().then(function(map) {
       $scope.layerGroup = L.layerGroup().addTo(map);
+      L.Icon.Default.imagePath = './images/leaflet';
     });
 
 
@@ -38,7 +39,6 @@ module.exports = function(app) {
         //ADDS ALL CRIMES IN DB TO MAP (deprecated)
         $scope.addAll = function() {
           leafletData.getMap().then(function(map) {
-            L.Icon.Default.imagePath = './images/leaflet';
             L.geoJson($scope.crimes, {
               onEachFeature: onEachFeature
             }).addTo(map);
@@ -48,7 +48,7 @@ module.exports = function(app) {
         //USES SELECTED VALUES FROM DROPDOWN TO FETCH MATCHING CRIMES AND MAP
         $scope.mapSelected = function(){
           $scope.clearMap();
-          angular.forEach($scope.selectedTypes, function( value, key ) {
+          // angular.forEach($scope.selectedTypes, function( value, key ) {
             for(var x=0; x<$scope.selectedTypes.length; x++){
               $http.get('/api/internal/crimetypes/'
                 + $scope.selectedTypes[x].name
@@ -57,18 +57,27 @@ module.exports = function(app) {
                 + '/'
                 + $scope.endDate)
               .then(function(res){
-                leafletData.getMap().then(function(map) {
-                  L.Icon.Default.imagePath = './images/leaflet';
-                  var newLayer = L.geoJson(res.data, {
-                    onEachFeature: onEachFeature
-                  });
-                  $scope.layerGroup.addLayer(newLayer);
-                  map.fitBounds(newLayer);
+                if (res.data.length > 0) {
+                  leafletData.getMap().then(function(map) {
+                    var newLayer = L.geoJson(res.data, {
+                      pointToLayer: function(feature, latlng) {
+                        var customIcon = L.MakiMarkers.icon({icon: iconList[feature.properties.summarized_offense_description].icon,
+                          color: iconList[feature.properties.summarized_offense_description].color,
+                          size: 'l'});
+                          return L.marker(latlng, {icon: customIcon});
+                        },
 
-                });
+                        onEachFeature: onEachFeature
+                      });
+                      $scope.layerGroup.addLayer(newLayer);
+                      map.fitBounds(newLayer);
+
+                    });
+                }  else {alert('No matching items found in database.')}
               });
             }
-          });
+        //   }
+        // );
         };
 
         // removes layers that have been plotted on the map
