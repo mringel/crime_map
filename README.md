@@ -4,8 +4,6 @@
 
 CrimeMapper is an open-source web application that allows you to see when and where crimes have occurred. How do we do this? Simple. The data comes directly from the Seattle Police Department's database. Our app simply offers a way to visually take note of the crimes that occur on a daily basis, not so different from how you would search for restaurants on Google Maps.
 
-[comment]: <> (As a bonus feature, you have the ability to view tweets that occurred around the time of the crime, and within a 0.5 kilometer radius.)
-
 To view our deployed app, please follow this [link](https://stark-ocean-9319.herokuapp.com/).
 
 ### How To Use this App
