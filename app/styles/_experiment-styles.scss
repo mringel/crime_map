@@ -115,6 +115,9 @@ html, body {
 .demo-layout .demo-navigation .mdl-navigation__link:hover {
   background-color: #00BCD4;
   color: #37474F;
+  a {
+    color: #37474F;
+  }
 }
 .demo-navigation .mdl-navigation__link .material-icons {
   font-size: 24px;
