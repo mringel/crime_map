@@ -1,10 +1,22 @@
-# Crime Map App
+# Seattle Crime Map
 
+Seattle Crime Map is an open-source web application that allows you to see when
+and where crimes have occurred. One of the main features is the ability to view tweets that occurred around the time of the crime, and within a 0.5 kilometer radius.
+
+To view the app, please follow this [link](https://stark-ocean-9319.herokuapp.com/).
+
+For more information about this app, go to the [About]() page.
+For instructions on how to use this app, go to the [How To]() page.
 
 ### Core Contributors
 
 Feel free to reach out to any of the core contributors with your questions or
 concerns. We will do our best to respond in a timely manner.
+
+[![Tucker Miller](http://vijayrc.com/vectorclocks/static/images/icon-github.png)](https://github.com/jhnmllr)
+[![Dustin Noyes](http://vijayrc.com/vectorclocks/static/images/icon-github.png)](https://github.com/haverchuck)
+[![David Park](https://avatars1.githubusercontent.com/u/12901487?v=3&s=50)](https://github.com/davidatthepark)
+[![Matthew Ringel](https://avatars0.githubusercontent.com/u/12709812?v=3&s=50)](https://github.com/mringel)
 
 # License
 
