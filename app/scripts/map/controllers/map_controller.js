@@ -85,7 +85,9 @@ module.exports = function(app) {
         // removes layers that have been plotted on the map
         $scope.clearMap = function() {
           $scope.layerGroup.clearLayers();
+          $scope.selectedItems = [];
           $scope.notFounds = [];
+          $scope.tweets = [];
         };
 
         //POPULATES DROPDOWN WITH INDEXED CRIME TYPES
