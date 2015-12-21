@@ -17,8 +17,6 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>CrimeMapper</title>
-
-
     <link href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
@@ -27,40 +25,46 @@
   <body data-ng-app="CrimeMapApp">
     <div data-ng-controller="MapController" class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
       <header class="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
-        <div class="mdl-layout__header-row">Search Crime Types
-          <div
-            isteven-multi-select
-            input-model="crimeTypes"
-            output-model="selectedTypes"
-            button-label="icon name"
-            item-label="icon name maker"
-            tick-property="ticked"
-            class='inline'>
+        <div id="desktop_controls">
+          <div class="mdl-layout__header-row">Search Crime Types
+            <div
+              isteven-multi-select
+              input-model="crimeTypes"
+              output-model="selectedTypes"
+              button-label="icon name"
+              item-label="icon name maker"
+              tick-property="ticked"
+              class='inline'>
+            </div>
+            Start Date
+            <md-datepicker ng-model="startDate" ng-change='renderEnd()' id='trans'></md-datepicker>
+            End Date
+            <md-datepicker ng-model="endDate" md-min-date="minDate" md-max-date="maxDate" id='trans'></md-datepicker>
+            <button type='button' ng-click='mapSelected()' class="pure-button inline">Map Crimes</button>
+            <button type="button" data-ng-click="clearMap()" class="pure-button inline">Clear</button>
+            Change Map Theme
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="map-toggle">
+              <i class="material-icons">map</i>
+            </button>
+            <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right" for="map-toggle">
+              <li class="mdl-menu__item"><a data-ng-click="changeTiles('openstreetmap')" class="pure-button">OpenStreetMaps</a></li>
+              <li class="mdl-menu__item"> <a data-ng-click="changeTiles('mapbox_dark')" class="pure-button">MapBox Dark</a></li>
+              <li class="mdl-menu__item"> <a data-ng-click="changeTiles('mapbox_light')" class="pure-button">MapBox Light</a></li>
+            </ul>
+            <div class="mdl-layout-spacer"></div>
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="info">
+              <i class="material-icons">more_vert</i>
+            </button>
+            <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right" for="info">
+              <li class="mdl-menu__item">about</li>
+              <li class="mdl-menu__item">instructions</li>
+            </ul>
           </div>
-          Start Date
-          <md-datepicker ng-model="startDate" ng-change='renderEnd()' id='trans'></md-datepicker>
-          End Date
-          <md-datepicker ng-model="endDate" md-min-date="minDate" md-max-date="maxDate" id='trans'></md-datepicker>
-          <button type='button' ng-click='mapSelected()' class="pure-button inline">Map Crimes</button>
-          <button type="button" data-ng-click="clearMap()" class="pure-button inline">Clear</button>
+        </div>
+        <div id= 'mobile_controls' class='mobile_adjust'>
+          <div class="mdl-layout" class="mobile_adjust"><i class="material-icons" id='mobile-controls'>more_vert</i></div>
 
-          Change Map Theme
-          <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="map-toggle">
-            <i class="material-icons">map</i>
-          </button>
-          <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right" for="map-toggle">
-            <li class="mdl-menu__item"><a data-ng-click="changeTiles('openstreetmap')" class="pure-button">OpenStreetMaps</a></li>
-            <li class="mdl-menu__item"> <a data-ng-click="changeTiles('mapbox_dark')" class="pure-button">MapBox Dark</a></li>
-            <li class="mdl-menu__item"> <a data-ng-click="changeTiles('mapbox_light')" class="pure-button">MapBox Light</a></li>
-          </ul>
-
-
-          <div class="mdl-layout-spacer"></div>
-
-          <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="info">
-            <i class="material-icons">more_vert</i>
-          </button>
-          <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right" for="info">
+          <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right" for="mobile_controls">
             <li class="mdl-menu__item">about</li>
             <li class="mdl-menu__item">instructions</li>
           </ul>
@@ -68,22 +72,57 @@
       </header>
       <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
         <header class="demo-drawer-header">
-
-
+          <div id='desktop_label'>
+            <h3>CrimeMapper</h3>
+          </div>
+          <div id='mobile_controls'>
+            <span class='mobile_control_row'>
+            Select Type
+              <div
+              isteven-multi-select
+              input-model="crimeTypes"
+              output-model="selectedTypes"
+              button-label="icon name"
+              item-label="icon name maker"
+              tick-property="ticked"
+              class='inline'>
+              </div>
+            </span>
+            <span class='mobile_control_row'>
+              Start Date
+              <md-datepicker ng-model="startDate" ng-change='renderEnd()' id='trans' class='inline'></md-datepicker>
+            </span>
+            <span class='mobile_control_row'>
+              End Date&nbsp;&nbsp;
+              <md-datepicker ng-model="endDate" md-min-date="minDate" md-max-date="maxDate" id='trans'class='inline' ></md-datepicker>
+            </span>
+            <span class='mobile_control_row'>
+              <button type='button' ng-click='mapSelected()' class="pure-button inline">Map Crimes</button>
+              <button type="button" data-ng-click="clearMap()" class="pure-button inline">Clear</button>
+            </span>
+            <span class='mobile_control_row'>
+              Change Map Theme
+              <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="map-toggle-mobile">
+                <i class="material-icons">map</i>
+              </button>
+              <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right" for="map-toggle-mobile">
+                <li class="mdl-menu__item"><a data-ng-click="changeTiles('openstreetmap')" class="pure-button">OpenStreetMaps</a></li>
+                <li class="mdl-menu__item"> <a data-ng-click="changeTiles('mapbox_dark')" class="pure-button">MapBox Dark</a></li>
+                <li class="mdl-menu__item"> <a data-ng-click="changeTiles('mapbox_light')" class="pure-button">MapBox Light</a></li>
+              </ul>
+            </span>
+          </div>
         </header>
         <nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800" id='tweetbox'>
-<!--           <a class="mdl-navigation__link" href=""><i class="mdl-color-text--blue-grey-400 material-icons" role="presentation">map</i>Home</a> -->
-                      <a class="mdl-navigation__link" ng-repeat="tweet in tweets.statuses">
-                      {{tweet.text}}
-                        <a ng-if='tweets.length!=0' href ="http://twitter.com/statuses/{{tweet.id_str}}">Click</a>
-                      <hr>
-                    </a>
+          <a class="mdl-navigation__link" ng-repeat="tweet in tweets.statuses">
+            {{tweet.text}}
+          <a ng-if='tweets.length!=0' href ="http://twitter.com/statuses/{{tweet.id_str}}">Click</a>
+            <hr>
+          </a>
         </nav>
       </div>
       <main class="mdl-layout__content mdl-color--grey-100">
-
-            <leaflet geojson="crimes" lf-center="seattle" tiles="tiles" defaults="defaults" height="92vh" width="95vw"></leaflet>
-
+        <leaflet geojson="crimes" lf-center="seattle" tiles="tiles" defaults="defaults" height="92vh" width="95vw"></leaflet>
       </main>
     </div>
 

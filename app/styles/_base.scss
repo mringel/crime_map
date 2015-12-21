@@ -53,6 +53,10 @@ $background: #ffbf80;
   margin:0 1em;
 }
 
+#mobile_controls{
+  display:none;
+}
+
 .inline{
   display:inline;
   margin:0 1em;
@@ -62,13 +66,33 @@ $background: #ffbf80;
   background-color:none;
 }
 
+.mobile_control_row{
+  display:block;
+}
+
 h1 {
   font-family: 'Lobster', cursive;
 
 }
 
-body {
-  // background-color: $background;
+
+@media (max-width: 1025px) {
+  #mobile_controls{
+    display:block;
+  }
+  .mobile_adjust{
+    margin:10px 10px 10px 95%;
+  }
+  #desktop_label{
+    display:none;
+  }
+  #desktop_controls{
+    display:none;
+  }
+  .mdl-layout__content{
+    margin:0;
+    float:right;
+  }
 }
 
 

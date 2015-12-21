@@ -67,8 +67,9 @@ html, body {
   -webkit-justify-content: flex-end;
       -ms-flex-pack: end;
           justify-content: flex-end;
-  padding: 16px;
-  height: 151px;
+  padding: 4px;
+  height: auto;
+  color:#99C5DB;
 }
 .demo-avatar-dropdown {
   display: -webkit-box;
@@ -238,4 +239,9 @@ _:-ms-input-placeholder, :root .demo-graph {
   -webkit-align-items: center;
       -ms-flex-align: center;
           align-items: center;
+}
+@media (max-width: 1025px) {
+  .demo-drawer-header {
+    background-color:#fff;
+  }
 }
