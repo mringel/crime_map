@@ -50,6 +50,7 @@
               <li class="mdl-menu__item"><a data-ng-click="changeTiles('openstreetmap')" class="pure-button">OpenStreetMaps</a></li>
               <li class="mdl-menu__item"> <a data-ng-click="changeTiles('mapbox_dark')" class="pure-button">MapBox Dark</a></li>
               <li class="mdl-menu__item"> <a data-ng-click="changeTiles('mapbox_light')" class="pure-button">MapBox Light</a></li>
+              <li class="mdl-menu__item"> <a data-ng-click="changeTiles('mapbox_highcontrast')" class="pure-button">MapBox High Contrast</a></li>
             </ul>
             <div class="mdl-layout-spacer"></div>
             <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="info">
@@ -76,6 +77,11 @@
           </div>
           <div id='mobile_controls'>
             <span class='mobile_control_row'>
+              <button type='button' ng-click='mapSelected()' class="pure-button inline">Map Crimes</button>
+              <button type="button" data-ng-click="clearMap()" class="pure-button inline">Clear</button>
+            </span>
+
+            <span class='mobile_control_row'>
             Select Type
               <div
               isteven-multi-select
@@ -96,10 +102,6 @@
               <md-datepicker ng-model="endDate" md-min-date="minDate" md-max-date="maxDate" id='trans'class='inline' ></md-datepicker>
             </span>
             <span class='mobile_control_row'>
-              <button type='button' ng-click='mapSelected()' class="pure-button inline">Map Crimes</button>
-              <button type="button" data-ng-click="clearMap()" class="pure-button inline">Clear</button>
-            </span>
-            <span class='mobile_control_row'>
               Change Map Theme
               <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="map-toggle-mobile">
                 <i class="material-icons">map</i>
@@ -108,6 +110,7 @@
                 <li class="mdl-menu__item"><a data-ng-click="changeTiles('openstreetmap')" class="pure-button">OpenStreetMaps</a></li>
                 <li class="mdl-menu__item"> <a data-ng-click="changeTiles('mapbox_dark')" class="pure-button">MapBox Dark</a></li>
                 <li class="mdl-menu__item"> <a data-ng-click="changeTiles('mapbox_light')" class="pure-button">MapBox Light</a></li>
+                <li class="mdl-menu__item"> <a data-ng-click="changeTiles('mapbox_highcontrast')" class="pure-button">MapBox High Contrast</a></li>
               </ul>
             </span>
           </div>

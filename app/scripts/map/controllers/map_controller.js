@@ -1,8 +1,9 @@
 module.exports = function(app) {
   app.controller("MapController", [ '$scope', '$http', 'leafletData', '$compile', function($scope, $http, leafletData, $compile) {
 
-    var moment = require('moment');
-    var iconList = require('../icon_list');
+    var moment    = require('moment');
+    var iconList  = require('../icon_list');
+    var tilesDict = require('../tiles_dict');
 
     //all crimes (deprecated)
     $scope.crimes = [];
@@ -15,15 +16,20 @@ module.exports = function(app) {
     $scope.mapLayers = [];
 
     $scope.startDate;
-    $scope.endDate = new Date();
+    $scope.endDate  = new Date();
     $scope.tweets = [];
     $scope.notFounds = [];
 
     // initialize a leaflet layergroup and add it to the map for better layer control
     $scope.layerGroup = null;
+    $scope.layerControl = null;
     leafletData.getMap().then(function(map) {
       $scope.layerGroup = L.layerGroup().addTo(map);
+      $scope.layerControl = new L.control.layers({},{},{position: 'topleft'}).addTo(map);
       L.Icon.Default.imagePath = './images/leaflet';
+      map.on('layerremove', function(e) {
+          $scope.layerControl.removeLayer(e.layer);
+      });
     });
 
 
@@ -49,7 +55,6 @@ module.exports = function(app) {
         //USES SELECTED VALUES FROM DROPDOWN TO FETCH MATCHING CRIMES AND MAP
         $scope.mapSelected = function(){
           $scope.clearMap();
-          // angular.forEach($scope.selectedTypes, function( value, key ) {
             for(var x=0; x<$scope.selectedTypes.length; x++){
               $http.get('/api/internal/crimetypes/'
                 + $scope.selectedTypes[x].name
@@ -67,19 +72,17 @@ module.exports = function(app) {
                           size: 'l'});
                           return L.marker(latlng, {icon: customIcon});
                         },
-
                         onEachFeature: onEachFeature
                       });
                       $scope.layerGroup.addLayer(newLayer);
                       map.fitBounds(newLayer);
+                      $scope.layerControl.addOverlay(newLayer, res.data[0].properties.summarized_offense_description);
 
                     });
                 }  else {$scope.notFounds.push(res.config.url.split("/")[4].toLowerCase());
                   }
               });
             }
-        //   }
-        // );
         };
 
         // removes layers that have been plotted on the map
@@ -144,41 +147,6 @@ module.exports = function(app) {
             + ', ' + yearMonthDay + ')">Nearby Tweets</button></div>' );
         }
 
-        var tilesDict = {
-          openstreetmap: {
-            url: "http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-            options: {
-              attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
-            }
-          },
-          opencyclemap: {
-            url: "http://{s}.tile.opencyclemap.org/cycle/{z}/{x}/{y}.png",
-            options: {
-              attribution: 'All maps &copy; <a href="http://www.opencyclemap.org">OpenCycleMap</a>, map data &copy; <a href="http://www.openstreetmap.org">OpenStreetMap</a> (<a href="http://www.openstreetmap.org/copyright">ODbL</a>'
-            }
-          },
-
-          mapbox_dark: {
-            name: 'Mapbox Dark',
-            url: 'https://api.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
-            type: 'xyz',
-            options: {
-              apikey: 'pk.eyJ1IjoibXJpbmdlbCIsImEiOiIwYjM4MzFkY2E3ZTEyNzAwNGM4M2VjODZlODlkNWZhNiJ9.EJlJwl9IJoBptQV_EARdYA',
-              mapid: 'mapbox.dark',
-              attribution: '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-            }
-          },
-          mapbox_light: {
-            name: 'Mapbox Light',
-            url: 'http://api.mapbox.com/v4/{mapid}/{z}/{x}/{y}.png?access_token={apikey}',
-            type: 'xyz',
-            options: {
-              apikey: 'pk.eyJ1IjoibXJpbmdlbCIsImEiOiIwYjM4MzFkY2E3ZTEyNzAwNGM4M2VjODZlODlkNWZhNiJ9.EJlJwl9IJoBptQV_EARdYA',
-              mapid: 'mapbox.light',
-              attribution: '© <a href="https://www.mapbox.com/about/maps/">Mapbox</a> © <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-            }
-          }
-        };
 
     //BEGIN DATE RENDERING
     $scope.startDate = new Date();
@@ -218,7 +186,7 @@ module.exports = function(app) {
                 defaults: {
                   scrollWheelZoom: false
                 },
-                tiles: tilesDict.openstreetmap
+                tiles: tilesDict.mapbox_highcontrast
               });
 
               $scope.changeTiles = function(tiles) {
