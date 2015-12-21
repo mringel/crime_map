@@ -25,12 +25,11 @@ module.exports = function(app) {
     $scope.layerControl = null;
     leafletData.getMap().then(function(map) {
       $scope.layerGroup = L.layerGroup().addTo(map);
-      $scope.layerControl = new L.control.layers({},{}).addTo(map);
+      $scope.layerControl = new L.control.layers({},{},{position: 'topleft'}).addTo(map);
       L.Icon.Default.imagePath = './images/leaflet';
       map.on('layerremove', function(e) {
           $scope.layerControl.removeLayer(e.layer);
       });
-
     });
 
 
@@ -187,7 +186,7 @@ module.exports = function(app) {
                 defaults: {
                   scrollWheelZoom: false
                 },
-                tiles: tilesDict.openstreetmap
+                tiles: tilesDict.mapbox_highcontrast
               });
 
               $scope.changeTiles = function(tiles) {
