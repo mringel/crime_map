@@ -16,15 +16,21 @@ module.exports = function(app) {
     $scope.mapLayers = [];
 
     $scope.startDate;
-    $scope.endDate = new Date();
+    $scope.endDate  = new Date();
     $scope.tweets = [];
     $scope.notFounds = [];
 
     // initialize a leaflet layergroup and add it to the map for better layer control
     $scope.layerGroup = null;
+    $scope.layerControl = null;
     leafletData.getMap().then(function(map) {
       $scope.layerGroup = L.layerGroup().addTo(map);
+      $scope.layerControl = new L.control.layers({},{}).addTo(map);
       L.Icon.Default.imagePath = './images/leaflet';
+      map.on('layerremove', function(e) {
+          $scope.layerControl.removeLayer(e.layer);
+      });
+
     });
 
 
@@ -50,7 +56,6 @@ module.exports = function(app) {
         //USES SELECTED VALUES FROM DROPDOWN TO FETCH MATCHING CRIMES AND MAP
         $scope.mapSelected = function(){
           $scope.clearMap();
-          // angular.forEach($scope.selectedTypes, function( value, key ) {
             for(var x=0; x<$scope.selectedTypes.length; x++){
               $http.get('/api/internal/crimetypes/'
                 + $scope.selectedTypes[x].name
@@ -68,19 +73,17 @@ module.exports = function(app) {
                           size: 'l'});
                           return L.marker(latlng, {icon: customIcon});
                         },
-
                         onEachFeature: onEachFeature
                       });
                       $scope.layerGroup.addLayer(newLayer);
                       map.fitBounds(newLayer);
+                      $scope.layerControl.addOverlay(newLayer, res.data[0].properties.summarized_offense_description);
 
                     });
                 }  else {$scope.notFounds.push(res.config.url.split("/")[4].toLowerCase());
                   }
               });
             }
-        //   }
-        // );
         };
 
         // removes layers that have been plotted on the map
