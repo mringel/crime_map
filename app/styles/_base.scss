@@ -48,12 +48,26 @@ $background: #ffbf80;
   font-family:sans-serif;
 }
 
+#trans{
+  background:transparent;
+  margin:0 1em;
+}
+
+#mobile_controls{
+  display:none;
+}
+
 .inline{
   display:inline;
+  margin:0 1em;
 }
 
 .override {
   background-color:none;
+}
+
+.mobile_control_row{
+  display:block;
 }
 
 h1 {
@@ -61,38 +75,27 @@ h1 {
 
 }
 
-body {
-  // background-color: $background;
+
+@media (max-width: 1025px) {
+  #mobile_controls{
+    display:block;
+  }
+  .mobile_adjust{
+    margin:10px 10px 10px 95%;
+  }
+  #desktop_label{
+    display:none;
+  }
+  #desktop_controls{
+    display:none;
+  }
+  .mdl-layout__content{
+    margin:0;
+    float:right;
+  }
 }
-
-
-/*  SECTIONS  */
-.section {
-  clear: both;
-  padding: 0px;
-  margin: 0px;
-}
-
-/*  COLUMN SETUP  */
-.col {
-  display: block;
-  float:left;
-  margin: 1% 0 1% 1.6%;
-}
-.col:first-child { margin-left: 0; }
-
-/*  GROUPING  */
-.group:before,
-.group:after { content:""; display:table; }
-.group:after { clear:both;}
-.group { zoom:1; /* For IE 6/7 */ }
-
-/*  GRID OF THREE  */
-.span_2_of_2 { width: 70%; }
-.span_1_of_2 { width: 28%;  background-color:#FFF;}
-
-/*  GO FULL WIDTH BELOW 480 PIXELS */
-@media only screen and (max-width: 480px) {
-  .col {  margin: 1% 0 1% 0%; }
-  .span_2_of_2, .span_1_of_2 { width: 100%; }
+@media (max-width: 535px) {
+  .mobile_adjust{
+    margin:10px 10px 10px 90%;
+  }
 }
