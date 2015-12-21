@@ -63,7 +63,6 @@
         </div>
         <div id= 'mobile_controls' class='mobile_adjust'>
           <div class="mdl-layout" class="mobile_adjust"><i class="material-icons" id='mobile-controls'>more_vert</i></div>
-
           <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right" for="mobile_controls">
             <li class="mdl-menu__item">about</li>
             <li class="mdl-menu__item">instructions</li>
@@ -116,12 +115,13 @@
         <nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800" id='tweetbox'>
           <a class="mdl-navigation__link" ng-repeat="tweet in tweets.statuses">
             {{tweet.text}}
-          <a ng-if='tweets.length!=0' href ="http://twitter.com/statuses/{{tweet.id_str}}">Click</a>
+          <a ng-if='tweets.length!=0' href ="http://twitter.com/statuses/{{tweet.id_str}}"></a>
             <hr>
           </a>
         </nav>
       </div>
       <main class="mdl-layout__content mdl-color--grey-100">
+        <div data-bear-transclude-directive>
         <leaflet geojson="crimes" lf-center="seattle" tiles="tiles" defaults="defaults" height="92vh" width="100vw"></leaflet>
       </main>
     </div>
