@@ -26,6 +26,7 @@ describe('map controller', function() {
       $httpBackend = _$httpBackend_;
       $scope = $rootScope.$new();
       $ControllerConstructor('MapController', {$scope: $scope});
+      $httpBackend.expectGET('/api/internal/crimetypes').respond(200, '');
     }));
 
     afterEach(function() {
@@ -35,7 +36,6 @@ describe('map controller', function() {
     });
 
     it('should add array to $scope.crimes when getAll() is called', function() {
-      $httpBackend.expectGET('/api/internal/crimetypes').respond(200, '');
       $httpBackend.expectGET('/api/crimes').respond(200, [{crime: 'horrible crime'}]);
       $scope.getAll();
       $httpBackend.flush();
@@ -44,7 +44,6 @@ describe('map controller', function() {
     });
 
     it('should add array to $scope.tweets when getTweets() is called', function() {
-      $httpBackend.expectGET('/api/internal/crimetypes').respond(200, '');
       $httpBackend.expectGET('/api/tweets/lat,long/startdate/enddate').respond(200, [{tweet: 'relevant tweet'}]);
       $scope.getTweets('lat', 'long', 'startdate', 'enddate');
       $httpBackend.flush();
@@ -52,7 +51,6 @@ describe('map controller', function() {
     });
 
     it('should push crime types from /api/internal/crimetypes to $scope.crimeTypes with getTypes()', function() {
-      $httpBackend.expectGET('/api/internal/crimetypes').respond(200, '');
       $httpBackend.expectGET('/api/internal/crimetypes').respond(200, ['burglary', 'robbery', 'shoplifting']);
       $scope.getTypes();
       $httpBackend.flush();
