@@ -117,21 +117,18 @@
           </div>
         </header>
         <nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800" >
-
-
-
-                  <section id="tweetbox">
-                      <div ng-repeat="tweet in tweets.statuses" class="mdl-navigation__link">
-                      {{tweet.text}}
-                      <a href ="http://twitter.com/statuses/{{tweet.id_str}}">Click</a>
-                      <hr>
-                    </div>
-                  </section>
-
-
+          <section id="tweetbox">
+              <div ng-repeat="tweet in tweets.statuses" class="mdl-navigation__link">
+              {{tweet.text}}
+              <a href ="http://twitter.com/statuses/{{tweet.id_str}}">Click</a>
+              <hr>
+            </div>
+          </section>
         </nav>
       </div>
       <main class="mdl-layout__content mdl-color--grey-100">
+
+        <!--MAIN PAGE CONTENT HERE!!-->
         <div data-ng-view>
         </div>
       </main>
