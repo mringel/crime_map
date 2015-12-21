@@ -13,3 +13,4 @@ var crimeMapApp = angular.module('CrimeMapApp', ['leaflet-directive', 'isteven-m
 // require('./services/services')(crimeMapApp);
 // require('./directives/directives')(crimeMapApp);
 require('./map/map')(crimeMapApp);
+

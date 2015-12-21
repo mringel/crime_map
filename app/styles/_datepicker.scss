@@ -10524,7 +10524,7 @@ md-datepicker {
   box-shadow: none;
   outline: none;
   background: transparent;
-  width:75%}
+  width:70%}
   .md-datepicker-input::-ms-clear {
     display: none; }
 
@@ -10534,7 +10534,7 @@ md-datepicker {
   border-bottom-width: 1px;
   border-bottom-style: solid;
   display: inline-block;
-  width: auto;
+  width: 0.01px;
   margin-left: 12px; }
   .md-datepicker-input-container.md-datepicker-focused {
     border-bottom-width: 2px; }

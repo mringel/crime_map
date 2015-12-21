@@ -1,107 +1,141 @@
-<!DOCTYPE html>
+<!doctype html>
+<!--
+  UI TEMPLATE FROM:
+  Material Design Lite
+  Copyright 2015 Google Inc. All rights reserved.
+
+  Licensed under the Apache License, Version 2.0 (the "License");
+  you may not use this file except in compliance with the License.
+  You may obtain a copy of the License at
+
+      https://www.apache.org/licenses/LICENSE-2.0
+
+-->
 <html lang="en">
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <link rel="stylesheet" href="styles/main.css" />
-    <title>Seattle Crime Map</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>CrimeMapper</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:regular,bold,italic,thin,light,bolditalic,black,medium&amp;lang=en" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link rel="stylesheet" href="styles/main.css">
   </head>
-
   <body data-ng-app="CrimeMapApp">
-    <main data-ng-controller="MapController" class="full-height">
-      <div id="layout" class="pure-g">
-        <div class="sidebar pure-u-1 pure-u-md-1-4">
-          <div class="header">
-              <h1 class="brand-title">Seattle Crime Map</h1>
-              <h2 class="brand-tagline">social media search tool</h2>
-
-              <nav class="nav">
-                  <ul class="nav-list">
-                      <li class="nav-item">
-                        <a href="" class="pure-button">how to</a>
-                      </li>
-                      <li class="nav-item">
-                        <a href="" class="pure-button">about</a>
-                      </li>
-                      <li class="nav-item">
-                        <a href="" class="pure-button">account</a>
-                      </li>
-                      <h2 class="brand-tagline">change map theme</h2>
-                      <li class="nav-item">
-                        <a data-ng-click="changeTiles('openstreetmap')" class="pure-button">OpenStreetMaps</a>
-                      </li>
-                      <li class="nav-item">
-                        <a data-ng-click="changeTiles('mapbox_dark')" class="pure-button">MapBox Dark</a>
-                      </li>
-                      <li class="nav-item">
-                        <a data-ng-click="changeTiles('mapbox_light')" class="pure-button">MapBox Light</a></li>
-                      </li>
-                      <li class="nav-item">
-                        <a data-ng-click="changeTiles('mapbox_highcontrast')" class="pure-button">MapBox High Contrast</a></li>
-                      </li>
-
-                  </ul>
-              </nav>
+    <div data-ng-controller="MapController" class="demo-layout mdl-layout mdl-js-layout mdl-layout--fixed-drawer mdl-layout--fixed-header">
+      <header class="demo-header mdl-layout__header mdl-color--grey-100 mdl-color-text--grey-600">
+        <div id="desktop_controls">
+          <div class="mdl-layout__header-row">Search Crime Types
+            <div
+              isteven-multi-select
+              input-model="crimeTypes"
+              output-model="selectedTypes"
+              button-label="icon name"
+              item-label="icon name maker"
+              tick-property="ticked"
+              class='inline'>
+            </div>
+            Start Date
+            <md-datepicker ng-model="startDate" ng-change='renderEnd()' id='trans'></md-datepicker>
+            End Date
+            <md-datepicker ng-model="endDate" md-min-date="minDate" md-max-date="maxDate" id='trans'></md-datepicker>
+            <button type='button' ng-click='mapSelected()' class="pure-button inline">Map Crimes</button>
+            <button type="button" data-ng-click="clearMap()" class="pure-button inline">Clear</button>
+            Change Map Theme
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="map-toggle">
+              <i class="material-icons">map</i>
+            </button>
+            <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right" for="map-toggle">
+              <li class="mdl-menu__item"><a data-ng-click="changeTiles('openstreetmap')" class="pure-button">OpenStreetMaps</a></li>
+              <li class="mdl-menu__item"> <a data-ng-click="changeTiles('mapbox_dark')" class="pure-button">MapBox Dark</a></li>
+              <li class="mdl-menu__item"> <a data-ng-click="changeTiles('mapbox_light')" class="pure-button">MapBox Light</a></li>
+              <li class="mdl-menu__item"> <a data-ng-click="changeTiles('mapbox_highcontrast')" class="pure-button">MapBox High Contrast</a></li>
+            </ul>
+            <div class="mdl-layout-spacer"></div>
+            <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="info">
+              <i class="material-icons">more_vert</i>
+            </button>
+            <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right" for="info">
+              <li class="mdl-menu__item">about</li>
+              <li class="mdl-menu__item">instructions</li>
+            </ul>
           </div>
         </div>
+        <div id= 'mobile_controls' class='mobile_adjust'>
+          <div class="mdl-layout" class="mobile_adjust"><i class="material-icons" id='mobile-controls'>more_vert</i></div>
+          <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right" for="mobile_controls">
+            <li class="mdl-menu__item">about</li>
+            <li class="mdl-menu__item">instructions</li>
+          </ul>
+        </div>
+      </header>
+      <div class="demo-drawer mdl-layout__drawer mdl-color--blue-grey-900 mdl-color-text--blue-grey-50">
+        <header class="demo-drawer-header">
+          <div id='desktop_label'>
+            <h3>CrimeMapper</h3>
+          </div>
+          <div id='mobile_controls'>
+            <span class='mobile_control_row'>
+            Select Type
+              <div
+              isteven-multi-select
+              input-model="crimeTypes"
+              output-model="selectedTypes"
+              button-label="icon name"
+              item-label="icon name maker"
+              tick-property="ticked"
+              class='inline'>
+              </div>
+            </span>
+            <span class='mobile_control_row'>
+              Start Date
+              <md-datepicker ng-model="startDate" ng-change='renderEnd()' id='trans' class='inline'></md-datepicker>
+            </span>
+            <span class='mobile_control_row'>
+              End Date&nbsp;&nbsp;
+              <md-datepicker ng-model="endDate" md-min-date="minDate" md-max-date="maxDate" id='trans'class='inline' ></md-datepicker>
+            </span>
+            <span class='mobile_control_row'>
+              <button type='button' ng-click='mapSelected()' class="pure-button inline">Map Crimes</button>
+              <button type="button" data-ng-click="clearMap()" class="pure-button inline">Clear</button>
+            </span>
+            <span class='mobile_control_row'>
+              Change Map Theme
+              <button class="mdl-button mdl-js-button mdl-js-ripple-effect mdl-button--icon" id="map-toggle-mobile">
+                <i class="material-icons">map</i>
+              </button>
+              <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right" for="map-toggle-mobile">
+                <li class="mdl-menu__item"><a data-ng-click="changeTiles('openstreetmap')" class="pure-button">OpenStreetMaps</a></li>
+                <li class="mdl-menu__item"> <a data-ng-click="changeTiles('mapbox_dark')" class="pure-button">MapBox Dark</a></li>
+                <li class="mdl-menu__item"> <a data-ng-click="changeTiles('mapbox_light')" class="pure-button">MapBox Light</a></li>
+              </ul>
+            </span>
+          </div>
+        </header>
+        <nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800" id='tweetbox'>
 
-        <div class="content pure-u-1 pure-u-md-3-4">
-          <div class="post-description">
-            <div class="post-images pure-g">
-              <div class="section group controls">
-                <div class="col span_1_of_2">
-                  <h2 class="control-label">search controls</h2>
-                  <div class="control-group">
-                    <div class="control-tag inline">select crimetypes</div>
-                    <div
-                      isteven-multi-select
-                      input-model="crimeTypes"
-                      output-model="selectedTypes"
-                      button-label="icon name"
-                      item-label="icon name maker"
-                      tick-property="ticked"
-                      class='inline'>
-                    </div>
-                  </div>
-                  <div class="control-group">
-                    <div class="control-tag inline">select start date</div>
-                    <md-datepicker ng-model="startDate" ng-change='renderEnd()' md-placeholder="Enter start date"></md-datepicker>
-                  </div>
-                  <div class="control-group">
-                    <div class="control-tag inline">select end date</div>
-                    <md-datepicker ng-model="endDate" md-placeholder="Enter end date" md-min-date="minDate" md-max-date="maxDate" ></md-datepicker>
-                  </div>
-                  <div class="control-group">
-                    <button type='button' ng-click='mapSelected()' class="pure-button inline">Map  Crimes</button>
-                    <button type="button" data-ng-click="clearMap()" class="pure-button inline">Clear</button>
-                  </div>
-                  <div class="warning" ng-if="notFounds.length!=0">
-                    <div ng-repeat='notFound in notFounds'>results not found for {{notFound}}</div>
-                  </div>
 
-                  <h2 class="control-label">nearby tweets</h2>
+
                   <section id="tweetbox">
-                      <div ng-repeat="tweet in tweets.statuses">
+                      <div ng-repeat="tweet in tweets.statuses" class="mdl-navigation__link">
                       {{tweet.text}}
                       <a href ="http://twitter.com/statuses/{{tweet.id_str}}">Click</a>
                       <hr>
                     </div>
                   </section>
 
-                </div>
-                <div class="col span_2_of_2">
-                  <leaflet geojson="crimes" lf-center="seattle" tiles="tiles" defaults="defaults" height="650px" width="800px" class='pure-img-responsive'></leaflet>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </main>
 
+        </nav>
+      </div>
+      <main class="mdl-layout__content mdl-color--grey-100">
+        <div data-bear-transclude-directive>
+        <leaflet geojson="crimes" lf-center="seattle" tiles="tiles" defaults="defaults" height="92vh" width="100vw"></leaflet>
+      </main>
+    </div>
+
+    <script src="scripts/material.js"></script>
     <script src = 'scripts/multi-select.js'></script>
-    <script src = 'scripts/ico-moon.js'></script>
     <script src = 'bundle.js'></script>
   </body>
 </html>
