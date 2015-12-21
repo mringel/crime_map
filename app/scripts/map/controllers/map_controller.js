@@ -14,6 +14,7 @@ module.exports = function(app) {
 
     // layers that are currently on the map (deprecated by $scope.layerGroup)
     $scope.mapLayers = [];
+    $scope.showMap=true;
 
     $scope.startDate;
     $scope.endDate  = new Date();
@@ -34,15 +35,18 @@ module.exports = function(app) {
 
 
     $scope.toAbout = function() {
+      $scope.showMap = false;
       $location.path('/about');
     };
 
-    $scope.toMap = function() {
-      $location.path('/map');
+    $scope.toHowTo = function() {
+      $scope.showMap = false;
+      $location.path('/howto');
     };
 
-    $scope.toHowTo = function() {
-      $location.path('/howto');
+    $scope.toMap = function() {
+      $scope.showMap = true;
+      $location.path('/map');
     };
         //GETS ALL CRIMES IN DB (deprecated, not used in current master)
         $scope.getAll = function() {

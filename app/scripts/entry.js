@@ -18,7 +18,6 @@ require('./map/map')(crimeMapApp);
 crimeMapApp.config(['$routeProvider',function($route){
   $route
     .when('/map', {
-      templateUrl: '../templates/leaflet.html',
       controller: 'MapController'
     })
      .when('/about', {
