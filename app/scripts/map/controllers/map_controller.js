@@ -37,6 +37,13 @@ module.exports = function(app) {
       $location.path('/about');
     };
 
+    $scope.toMap = function() {
+      $location.path('/map');
+    };
+
+    $scope.toHowTo = function() {
+      $location.path('/howto');
+    };
         //GETS ALL CRIMES IN DB (deprecated, not used in current master)
         $scope.getAll = function() {
           $http.get('/api/crimes')

@@ -25,6 +25,10 @@ crimeMapApp.config(['$routeProvider',function($route){
       templateUrl: '../templates/about.html',
       controller: 'MapController'
     })
+     .when('/howto', {
+      templateUrl: '../templates/howto.html',
+      controller: 'MapController'
+    })
     .otherwise({
       redirectTo: '/map'
     });
