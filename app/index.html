@@ -56,7 +56,7 @@
               <i class="material-icons">more_vert</i>
             </button>
             <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right" for="info">
-              <li class="mdl-menu__item">about</li>
+              <li class="mdl-menu__item" ng-click="toAbout()">about</li>
               <li class="mdl-menu__item">instructions</li>
             </ul>
           </div>
@@ -112,7 +112,7 @@
             </span>
           </div>
         </header>
-        <nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800" id='tweetbox'>
+        <nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800" >
 
 
 
@@ -128,8 +128,8 @@
         </nav>
       </div>
       <main class="mdl-layout__content mdl-color--grey-100">
-        <div data-bear-transclude-directive>
-        <leaflet geojson="crimes" lf-center="seattle" tiles="tiles" defaults="defaults" height="92vh" width="100vw"></leaflet>
+        <div data-ng-view>
+
       </main>
     </div>
 

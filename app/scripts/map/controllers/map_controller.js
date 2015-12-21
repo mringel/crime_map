@@ -1,5 +1,5 @@
 module.exports = function(app) {
-  app.controller("MapController", [ '$scope', '$http', 'leafletData', '$compile', function($scope, $http, leafletData, $compile) {
+  app.controller("MapController", [ '$scope', '$http', 'leafletData', '$compile', '$location', function($scope, $http, leafletData, $compile, $location) {
 
     var moment = require('moment');
     var iconList = require('../icon_list');
@@ -26,6 +26,10 @@ module.exports = function(app) {
       L.Icon.Default.imagePath = './images/leaflet';
     });
 
+
+    $scope.toAbout = function() {
+      $location.path('/about');
+    };
 
         //GETS ALL CRIMES IN DB (deprecated, not used in current master)
         $scope.getAll = function() {
