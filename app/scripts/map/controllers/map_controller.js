@@ -200,7 +200,7 @@ module.exports = function(app) {
                 },
                 defaults: {
                   scrollWheelZoom: false,
-                  tap: true
+                  tap: false
                 },
                 tiles: tilesDict.mapbox_highcontrast
               });
