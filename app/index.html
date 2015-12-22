@@ -66,8 +66,9 @@
         <div id= 'mobile_controls' class='mobile_adjust'>
           <div class="mdl-layout" class="mobile_adjust"><i class="material-icons" id='mobile-controls'>more_vert</i></div>
           <ul class="mdl-menu mdl-js-menu mdl-js-ripple-effect mdl-menu--bottom-right" for="mobile_controls">
-            <li class="mdl-menu__item">about</li>
-            <li class="mdl-menu__item">instructions</li>
+            <li class="mdl-menu__item" ng-click='toMap()'>map</li>
+            <li class="mdl-menu__item" ng-click='toAbout()'>about</li>
+            <li class="mdl-menu__item" ng-click='toHowTo()'>instructions</li>
           </ul>
         </div>
       </header>
@@ -117,16 +118,16 @@
           </div>
         </header>
         <nav class="demo-navigation mdl-navigation mdl-color--blue-grey-800" >
-        <section id="tweetbox">
-            <div ng-repeat="tweet in tweets.statuses" class="mdl-navigation__link">
-            <a href ="http://twitter.com/statuses/{{tweet.id_str}}">
-              {{tweet.text}}
-            </a>
-            <hr>
+          <div class="warning" ng-if="notFounds.length!=0">
+            <div ng-repeat='notFound in notFounds'>results not found for {{notFound}}</div>
           </div>
-        </section>
-
-
+          <section id="tweetbox">
+            <div ng-repeat="tweet in tweets.statuses" class="mdl-navigation__link">
+              <a href ="http://twitter.com/statuses/{{tweet.id_str}}">
+              {{tweet.text}}</a>
+              <hr>
+            </div>
+          </section>
         </nav>
       </div>
       <main class="mdl-layout__content mdl-color--grey-100">
