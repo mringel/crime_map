@@ -199,7 +199,8 @@ module.exports = function(app) {
                   zoom: 12
                 },
                 defaults: {
-                  scrollWheelZoom: false
+                  scrollWheelZoom: false,
+                  tap: true
                 },
                 tiles: tilesDict.mapbox_highcontrast
               });
