@@ -15,7 +15,7 @@ module.exports = function(app) {
     // layers that are currently on the map (deprecated by $scope.layerGroup)
     $scope.mapLayers = [];
     $scope.showMap=true;
-
+    $scope.earliest = new Date(2015, 9, 1);
     $scope.startDate;
     $scope.endDate  = new Date();
     $scope.tweets = [];

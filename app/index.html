@@ -37,7 +37,7 @@
               class='inline'>
             </div>
             Start Date
-            <md-datepicker ng-model="startDate" ng-change='renderEnd()' id='trans'></md-datepicker>
+            <md-datepicker ng-model="startDate" ng-change='renderEnd()' id='trans' md-min-date='earliest'></md-datepicker>
             End Date
             <md-datepicker ng-model="endDate" md-min-date="minDate" md-max-date="maxDate" id='trans'></md-datepicker>
             <button type='button' ng-click='mapSelected()' class="pure-button inline">Map Crimes</button>
@@ -97,7 +97,7 @@
             </span>
             <span class='mobile_control_row'>
               Start Date
-              <md-datepicker ng-model="startDate" ng-change='renderEnd()' id='trans' class='inline'></md-datepicker>
+              <md-datepicker ng-model="startDate" ng-change='renderEnd()' id='trans' md-min-date='earliest' class='inline'></md-datepicker>
             </span>
             <span class='mobile_control_row'>
               End Date&nbsp;&nbsp;
