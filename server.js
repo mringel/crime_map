@@ -4,16 +4,7 @@ var mongoose = require('mongoose');
 var app = express();
 var crimeRouter = require(__dirname + '/routes/crime_routes.js');
 
-console.log("--------Mongolab URI----------")
-console.log(process.env.MONGODB_URI);
-
-try {
-  mongoose.connect('mongodb://heroku_wsk73r7d:34dprp98se1772gj3s29nt9ckk@ds129394.mlab.com:29394/heroku_wsk73r7d');
-} catch(err) {
-  console.log(err);
-  console.log(process.env.MONGOLAB_URI);
-}
-
+mongoose.connect(process.env.MONGODB_URI);
 
 app.use(express.static(__dirname + '/build'));
 
