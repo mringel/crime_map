@@ -66,7 +66,7 @@ crimeRouter.get('/internal/crimetypes/:crimeType/:start/:end', function(req, res
 });
 
 function callSPD (search, cb){
-    requester('https://data.seattle.gov/resource/y7pv-r3kh.geojson?month=' + search, function (error, response, body) {
+    requester('https://data.seattle.gov/resource/y7pv-r3kh.geojson?year=2017&month=' + search, function (error, response, body) {
         if (!error && response.statusCode == 200) {
           console.log('socrata api called')
         };
