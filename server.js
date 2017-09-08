@@ -5,7 +5,7 @@ var app = express();
 var crimeRouter = require(__dirname + '/routes/crime_routes.js');
 
 try {
-  mongoose.connect(process.env.MONGOLAB_URI ||'mongodb://localhost/crime_db');
+  mongoose.connect('mongodb://heroku_wsk73r7d:34dprp98se1772gj3s29nt9ckk@ds129394.mlab.com:29394/heroku_wsk73r7d');
 } catch(err) {
   console.log(err);
   console.log(process.env.MONGOLAB_URI);
