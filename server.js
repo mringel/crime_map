@@ -4,8 +4,13 @@ var mongoose = require('mongoose');
 var app = express();
 var crimeRouter = require(__dirname + '/routes/crime_routes.js');
 
+try {
+  mongoose.connect(process.env.MONGOLAB_URI ||'mongodb://localhost/crime_db');
+} catch(err) {
+  console.log(err);
+  console.log(process.env.MONGOLAB_URI);
+}
 
-mongoose.connect(process.env.MONGOLAB_URI ||'mongodb://localhost/crime_db');
 
 app.use(express.static(__dirname + '/build'));
 
