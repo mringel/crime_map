@@ -1,6 +1,6 @@
 var express = require('express');
 var mongoose = require('mongoose');
-require('dotenv').load();
+//require('dotenv').load();
 var app = express();
 var crimeRouter = require(__dirname + '/routes/crime_routes.js');
 
